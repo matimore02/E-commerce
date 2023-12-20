@@ -39,8 +39,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 30)]
     private ?string $prenom_use = null;
 
-    #[ORM\ManyToOne]
-    private ?Pays $pays = null;
 
     #[ORM\Column]
     private ?int $telephone_use = null;
@@ -153,17 +151,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getPays(): ?Pays
-    {
-        return $this->pays;
-    }
 
-    public function setPays(?Pays $pays): static
-    {
-        $this->pays = $pays;
-
-        return $this;
-    }
 
     public function getTelephoneUse(): ?int
     {
