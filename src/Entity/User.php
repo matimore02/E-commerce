@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -28,6 +29,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date_naissance_use = null;
+
+    #[ORM\Column(length: 30)]
+    private ?string $nom_use = null;
+
+    #[ORM\Column(length: 30)]
+    private ?string $prenom_use = null;
+
+    #[ORM\ManyToOne]
+    private ?Pays $pays = null;
+
+    #[ORM\Column]
+    private ?int $telephone_use = null;
+
+
 
     public function getId(): ?int
     {
@@ -98,4 +116,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function getDateNaissanceUse(): ?\DateTimeInterface
+    {
+        return $this->date_naissance_use;
+    }
+
+    public function setDateNaissanceUse(\DateTimeInterface $date_naissance_use): static
+    {
+        $this->date_naissance_use = $date_naissance_use;
+
+        return $this;
+    }
+
+    public function getNomUse(): ?string
+    {
+        return $this->nom_use;
+    }
+
+    public function setNomUse(string $nom_use): static
+    {
+        $this->nom_use = $nom_use;
+
+        return $this;
+    }
+
+    public function getPrenomUse(): ?string
+    {
+        return $this->prenom_use;
+    }
+
+    public function setPrenomUse(string $prenom_use): static
+    {
+        $this->prenom_use = $prenom_use;
+
+        return $this;
+    }
+
+    public function getPays(): ?Pays
+    {
+        return $this->pays;
+    }
+
+    public function setPays(?Pays $pays): static
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    public function getTelephoneUse(): ?int
+    {
+        return $this->telephone_use;
+    }
+
+    public function setTelephoneUse(int $telephone_use): static
+    {
+        $this->telephone_use = $telephone_use;
+
+        return $this;
+    }
+
+
 }
