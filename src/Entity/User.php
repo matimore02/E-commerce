@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -42,6 +44,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?int $telephone_use = null;
+
+    #[ORM\OneToMany(mappedBy: 'id_use', targetEntity: Panier::class)]
+    private Collection $paniers;
+
+    #[ORM\OneToMany(mappedBy: 'id_use', targetEntity: Acheter::class)]
+    private Collection $acheters;
+
+    public function __construct()
+    {
+        $this->paniers = new ArrayCollection();
+        $this->acheters = new ArrayCollection();
+    }
 
 
 
@@ -161,6 +175,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTelephoneUse(int $telephone_use): static
     {
         $this->telephone_use = $telephone_use;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Panier>
+     */
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function addPanier(Panier $panier): static
+    {
+        if (!$this->paniers->contains($panier)) {
+            $this->paniers->add($panier);
+            $panier->setIdUse($this);
+        }
+
+        return $this;
+    }
+
+    public function removePanier(Panier $panier): static
+    {
+        if ($this->paniers->removeElement($panier)) {
+            // set the owning side to null (unless already changed)
+            if ($panier->getIdUse() === $this) {
+                $panier->setIdUse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Acheter>
+     */
+    public function getAcheters(): Collection
+    {
+        return $this->acheters;
+    }
+
+    public function addAcheter(Acheter $acheter): static
+    {
+        if (!$this->acheters->contains($acheter)) {
+            $this->acheters->add($acheter);
+            $acheter->setIdUse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAcheter(Acheter $acheter): static
+    {
+        if ($this->acheters->removeElement($acheter)) {
+            // set the owning side to null (unless already changed)
+            if ($acheter->getIdUse() === $this) {
+                $acheter->setIdUse(null);
+            }
+        }
 
         return $this;
     }

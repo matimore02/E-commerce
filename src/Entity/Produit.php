@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProduitRepository::class)]
@@ -31,6 +33,14 @@ class Produit
     #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?CatProduit $cat = null;
+
+    #[ORM\OneToMany(mappedBy: 'id_pro', targetEntity: Composer::class)]
+    private Collection $composers;
+
+    public function __construct()
+    {
+        $this->composers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +115,36 @@ class Produit
     public function setCat(?CatProduit $cat): static
     {
         $this->cat = $cat;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Composer>
+     */
+    public function getComposers(): Collection
+    {
+        return $this->composers;
+    }
+
+    public function addComposer(Composer $composer): static
+    {
+        if (!$this->composers->contains($composer)) {
+            $this->composers->add($composer);
+            $composer->setIdPro($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComposer(Composer $composer): static
+    {
+        if ($this->composers->removeElement($composer)) {
+            // set the owning side to null (unless already changed)
+            if ($composer->getIdPro() === $this) {
+                $composer->setIdPro(null);
+            }
+        }
 
         return $this;
     }
