@@ -1,0 +1,131 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+nav {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+nav .icon-dropdown-menu {
+    display: block;
+    height: 60px;
+    width: auto;
+}
+
+@media screen and (min-width: 1200px) {
+    nav .icon-dropdown-menu {
+        display: none;
+    }
+}
+
+nav .logo {
+    display: none;
+}
+
+@media screen and (min-width: 1200px) {
+    nav .logo {
+        position: absolute;
+        left: 20px;
+        top: 10px;
+        height: 130px;
+        border-radius: 20px;
+    }
+}
+
+nav .top-nav, nav .bot-nav {
+    padding-left: 410px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    list-style: none;
+    gap: 2em;
+}
+
+@media screen and (min-width: 1200px) {
+    nav .top-nav, nav .bot-nav {
+        gap: 1em;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    nav .top-nav, nav .bot-nav {
+        gap: 2em;
+    }
+}
+
+nav .top-nav {
+    background-color: #fff;
+}
+
+nav .top-nav .search-bar-lg {
+    display: none;
+}
+
+@media screen and (min-width: 1200px) {
+    nav .top-nav .search-bar-lg {
+        display: flex;
+        flex-direction: row;
+        background-color: #cecece;
+        border-radius: 10px;
+    }
+
+    nav .top-nav .search-bar-lg input {
+        width: 200px;
+        height: 3em;
+        border: 0;
+        padding: 0.75em;
+        outline: none;
+        background-color: #cecece;
+        border-radius: 10px;
+    }
+    
+    nav .top-nav .search-bar-lg button {
+        border-radius: 10px;
+        background-color: #cecece;
+        border: 0;
+        width: 40px;
+        cursor: pointer;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    nav .top-nav .search-bar-lg input {
+        width: 400px;
+    }
+}
+
+nav .bot-nav {
+    background-color: #002b59;
+}
+
+nav .top-nav .nav-links-top {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 2em;
+}
+
+@media screen and (min-width: 1600px) {
+    nav .top-nav .nav-links-top .nav-link, nav .bot-nav .nav-link {
+        font-size: 1.5em;
+    }
+}
+
+nav .top-nav .nav-links-top .nav-link a {
+    color: #002b59;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+nav .bot-nav .nav-link a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+}
