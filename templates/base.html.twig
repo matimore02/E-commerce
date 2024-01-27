@@ -10,57 +10,69 @@
             {{ ux_controller_link_tags() }}
         {% endblock %}
 
+        <script src="{{ asset('assets/js/main.js') }}"></script>
         {% block javascripts %}
             {{ importmap() }}
         {% endblock %}
     </head>
     <body>
-    <nav>
-        <img class="icon-dropdown-menu" src="{{ asset('assets/svg/icon-dropdown.svg') }}"></img>
-        <img class="logo" src="{{ asset('assets/img/logo.png') }}"></img>
-        <ul class="top-nav">
-            <li class="search-bar-lg">
-                <input placeholder="rechercher un produit ..."></input>
-                <button>
-                    <img class="search-icon" src="{{ asset('assets/svg/search.svg') }}"></img>
-                </button>
-            </li>
-            <section class="nav-links-top">
-                <li class="nav-link">
-                    <a href="">PANIER[0]</a>
-                </li>
-                <li class="nav-link">
-                    <a href="">MON PROFIL</a>
-                </li>
-                <li class="nav-link">
-                    <a href="">MES COMMANDES</a>
-                </li>
-                <li class="nav-link">
-                    <a href="">DECONNEXION</a>
-                </li>
-            <section>
-        </ul>
-        <ul class="bot-nav">
-            <li class="nav-link">
-                <a href="">ACCEUIL</a>
-            </li>
-            <li class="nav-link">
-                <a href="">CATALOGUE</a>
-            </li>
-            <li class="nav-link">
-                <a href="">PRODUITS</a>
-            </li>
-            <li class="nav-link">
-                <a href="">S.A.V</a>
-            </li>
-            <li class="nav-link">
-                <a href="">F.A.Q</a>
-            </li>
-            <li class="nav-link">
-                <a href="">CONTACT</a>
-            </li>
-        </ul>
-    </nav>
+        <nav>
+            <section class="dropdown-menu-container">
+                <span>LuxeLane</span>
+                <img onclick="toggleNavbar()" class="icon-dropdown-menu" src="assets/svg/icon-dropdown.svg"></img>
+            </section>
+            <img class="logo" src="assets/img/logo.png"></img>
+            <section class="nav-group">
+                <ul class="top-nav">
+                    <li class="search-bar-lg">
+                        <input placeholder="rechercher un produit ..."></input>
+                        <button>
+                            <img class="search-icon" src="assets/svg/search.svg"></img>
+                        </button>
+                    </li>
+                    <section class="nav-links-top">
+                        <li class="nav-link">
+                            <a href="">PANIER[0]</a>
+                        </li>
+                        <li class="nav-link">
+                            <a href="">MON PROFIL</a>
+                        </li>
+                        <li class="nav-link">
+                            <a href="">MES COMMANDES</a>
+                        </li>
+                        <li class="nav-link">
+                            <a href="">DECONNEXION</a>
+                        </li>
+                    <section>
+                </ul>
+                <ul class="bot-nav">
+                    <li class="nav-link">
+                        <a href="">ACCEUIL</a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="">CATALOGUE</a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="">PRODUITS</a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="">S.A.V</a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="">F.A.Q</a>
+                    </li>
+                    <li class="nav-link">
+                        <a href="">CONTACT</a>
+                    </li>
+                </ul>
+            </section>
+        </nav>
+        <section class="search-bar-sm">
+            <input placeholder="rechercher un produit ..."></input>
+            <button>
+                <img class="search-icon" src="assets/svg/search.svg"></img>
+            </button>
+        </section>
         {% block body %}{% endblock %}
     </body>
 </html>
