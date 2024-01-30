@@ -208,3 +208,29 @@ nav .nav-group .top-nav .search-bar-lg {
         width: 400px;
     }
 }
+
+.sign-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #002b59;
+    padding: 1em;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 50px auto 0 auto;
+    text-align: center;
+}
+
+.input-md {
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.sign-form div {
+    width: 100%;
+}

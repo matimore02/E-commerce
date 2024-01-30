@@ -3,21 +3,63 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <section class="sign-container">
+        <h1>Register</h1>
 
-    {{ form_errors(registrationForm) }}
+        {{ form_errors(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
+        {{ form_start(registrationForm, {
+            attr: {
+                class: 'sign-form w-100'
+            }
         }) }}
-        {{ form_row(registrationForm.nom_use) }}
-        {{ form_row(registrationForm.prenom_use) }}
-        {{ form_row(registrationForm.telephone_use) }}
-        {{ form_row(registrationForm.date_naissance_use) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_row(registrationForm.nom_use, {
+                label: false,
+                attr: {
+                    placeholder: 'nom',
+                    class: 'input-md w-100'
+                }
+            }) }}
+            {{ form_row(registrationForm.prenom_use, {
+                label: false,
+                attr: {
+                    placeholder: 'prenom',
+                    class: 'input-md w-100'
+                }
+            }) }}
+            {{ form_row(registrationForm.email, {
+                label: false,
+                attr: {
+                    placeholder: 'email',
+                    class: 'input-md w-100'
+                }
+            }) }}
+            {{ form_row(registrationForm.plainPassword, {
+                label: false,
+                attr: {
+                    placeholder: 'mot de passe',
+                    class: 'input-md w-100'
+                }
+            }) }}
+            {{ form_row(registrationForm.telephone_use, {
+                label: false,
+                attr: {
+                    placeholder: 'telephone',
+                    class: 'input-md w-100'
+                }
+            }) }}
+            {{ form_row(registrationForm.date_naissance_use, {
+                attr: {
+                    class: 'input-md w-100'
+                }
+            }) }}
+            {{ form_row(registrationForm.agreeTerms, {
+                attr: {
+                    class: ''
+                }
+            }) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <button type="submit" class="btn">Register</button>
+        {{ form_end(registrationForm) }}
+    </section>
 {% endblock %}
