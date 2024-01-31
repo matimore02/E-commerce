@@ -16,10 +16,10 @@ class Panier
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'paniers')]
-    private ?User $id_use = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'paniers')]
-    private ?Etat $id_eta = null;
+    private ?Etat $etat = null;
 
     #[ORM\OneToMany(mappedBy: 'id_pan', targetEntity: Acheter::class)]
     private Collection $acheters;
@@ -40,24 +40,24 @@ class Panier
 
     public function getIdUse(): ?User
     {
-        return $this->id_use;
+        return $this->user;
     }
 
-    public function setIdUse(?User $id_use): static
+    public function setIdUse(?User $user): static
     {
-        $this->id_use = $id_use;
+        $this->user = $user;
 
         return $this;
     }
 
     public function getIdEta(): ?Etat
     {
-        return $this->id_eta;
+        return $this->etat;
     }
 
-    public function setIdEta(?Etat $id_eta): static
+    public function setIdEta(?Etat $etat): static
     {
-        $this->id_eta = $id_eta;
+        $this->etat = $etat;
 
         return $this;
     }

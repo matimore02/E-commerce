@@ -14,10 +14,10 @@ class Acheter
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'acheters')]
-    private ?user $id_use = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'acheters')]
-    private ?panier $id_pan = null;
+    private ?Panier $panier = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
@@ -27,26 +27,26 @@ class Acheter
         return $this->id;
     }
 
-    public function getIdUse(): ?user
+    public function getIdUse(): ?User
     {
-        return $this->id_use;
+        return $this->user;
     }
 
-    public function setIdUse(?user $id_use): static
+    public function setIdUse(?User $user): static
     {
-        $this->id_use = $id_use;
+        $this->user = $user;
 
         return $this;
     }
 
-    public function getIdPan(): ?panier
+    public function getIdPan(): ?Panier
     {
-        return $this->id_pan;
+        return $this->panier;
     }
 
-    public function setIdPan(?panier $id_pan): static
+    public function setIdPan(?Panier $panier): static
     {
-        $this->id_pan = $id_pan;
+        $this->panier = $panier;
 
         return $this;
     }

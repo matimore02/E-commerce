@@ -37,9 +37,13 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'id_pro', targetEntity: Composer::class)]
     private Collection $composers;
 
+    #[ORM\OneToMany(mappedBy: 'id_pro', targetEntity: Noter::class)]
+    private Collection $noters;
+
     public function __construct()
     {
         $this->composers = new ArrayCollection();
+        $this->noters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -143,6 +147,36 @@ class Produit
             // set the owning side to null (unless already changed)
             if ($composer->getIdPro() === $this) {
                 $composer->setIdPro(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Noter>
+     */
+    public function getNoters(): Collection
+    {
+        return $this->noters;
+    }
+
+    public function addNoter(Noter $noter): static
+    {
+        if (!$this->noters->contains($noter)) {
+            $this->noters->add($noter);
+            $noter->setIdPro($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNoter(Noter $noter): static
+    {
+        if ($this->noters->removeElement($noter)) {
+            // set the owning side to null (unless already changed)
+            if ($noter->getIdPro() === $this) {
+                $noter->setIdPro(null);
             }
         }
 

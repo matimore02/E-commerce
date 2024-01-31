@@ -14,13 +14,13 @@ class Composer
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'composers')]
-    private ?Panier $id_pan = null;
+    private ?Panier $panier = null;
 
     #[ORM\ManyToOne(inversedBy: 'composers')]
-    private ?Produit $id_pro = null;
+    private ?Produit $produit = null;
 
     #[ORM\Column]
-    private ?int $Quantité = null;
+    private ?int $quantite = null;
 
     public function getId(): ?int
     {
@@ -29,36 +29,36 @@ class Composer
 
     public function getIdPan(): ?Panier
     {
-        return $this->id_pan;
+        return $this->panier;
     }
 
-    public function setIdPan(?Panier $id_pan): static
+    public function setIdPan(?Panier $panier): static
     {
-        $this->id_pan = $id_pan;
+        $this->panier = $panier;
 
         return $this;
     }
 
     public function getIdPro(): ?Produit
     {
-        return $this->id_pro;
+        return $this->produit;
     }
 
-    public function setIdPro(?Produit $id_pro): static
+    public function setIdPro(?Produit $produit): static
     {
-        $this->id_pro = $id_pro;
+        $this->produit = $produit;
 
         return $this;
     }
 
-    public function getQuantité(): ?int
+    public function getQuantite(): ?int
     {
-        return $this->Quantité;
+        return $this->quantite;
     }
 
-    public function setQuantité(int $Quantité): static
+    public function setQuantite(int $quantite): static
     {
-        $this->Quantité = $Quantité;
+        $this->quantite = $quantite;
 
         return $this;
     }
