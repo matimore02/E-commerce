@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CatProduit index{% endblock %}
+
+{% block body %}
+    <h1>CatProduit index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cat_produit in cat_produits %}
+            <tr>
+                <td>{{ cat_produit.id }}</td>
+                <td>{{ cat_produit.libelle }}</td>
+                <td>
+                    <a href="{{ path('app_cat_produit_show', {'id': cat_produit.id}) }}">show</a>
+                    <a href="{{ path('app_cat_produit_edit', {'id': cat_produit.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cat_produit_new') }}">Create new</a>
+{% endblock %}
