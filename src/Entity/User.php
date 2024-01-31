@@ -54,11 +54,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'id_use', targetEntity: Noter::class)]
     private Collection $noters;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Adresse::class)]
+    private Collection $adresses;
+
     public function __construct()
     {
         $this->paniers = new ArrayCollection();
         $this->acheters = new ArrayCollection();
         $this->noters = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
     }
 
 
@@ -267,6 +271,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($noter->getIdUse() === $this) {
                 $noter->setIdUse(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Adresse>
+     */
+    public function getAdresses(): Collection
+    {
+        return $this->adresses;
+    }
+
+    public function addAdress(Adresse $adress): static
+    {
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses->add($adress);
+            $adress->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdress(Adresse $adress): static
+    {
+        if ($this->adresses->removeElement($adress)) {
+            // set the owning side to null (unless already changed)
+            if ($adress->getUser() === $this) {
+                $adress->setUser(null);
             }
         }
 
