@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  {% for adresse in adresses %}
+  {{adresse.villeAdr}}
+  {{adresse.CpAdr}}
+  {{adresse.ComplementAdr}}
+  {{adresse.RueAdr}}
+
+  {% endfor %}
+{% endblock %}
