@@ -40,10 +40,14 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'id_pro', targetEntity: Noter::class)]
     private Collection $noters;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Commenter::class, orphanRemoval: true)]
+    private Collection $commenters;
+
     public function __construct()
     {
         $this->composers = new ArrayCollection();
         $this->noters = new ArrayCollection();
+        $this->commenters = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +181,36 @@ class Produit
             // set the owning side to null (unless already changed)
             if ($noter->getIdPro() === $this) {
                 $noter->setIdPro(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commenter>
+     */
+    public function getCommenters(): Collection
+    {
+        return $this->commenters;
+    }
+
+    public function addCommenter(Commenter $commenter): static
+    {
+        if (!$this->commenters->contains($commenter)) {
+            $this->commenters->add($commenter);
+            $commenter->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommenter(Commenter $commenter): static
+    {
+        if ($this->commenters->removeElement($commenter)) {
+            // set the owning side to null (unless already changed)
+            if ($commenter->getProduit() === $this) {
+                $commenter->setProduit(null);
             }
         }
 

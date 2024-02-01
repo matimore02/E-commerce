@@ -57,12 +57,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Adresse::class)]
     private Collection $adresses;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commenter::class, orphanRemoval: true)]
+    private Collection $commenters;
+
     public function __construct()
     {
         $this->paniers = new ArrayCollection();
         $this->acheters = new ArrayCollection();
         $this->noters = new ArrayCollection();
         $this->adresses = new ArrayCollection();
+        $this->commenters = new ArrayCollection();
     }
 
 
@@ -301,6 +305,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($adress->getUser() === $this) {
                 $adress->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commenter>
+     */
+    public function getCommenters(): Collection
+    {
+        return $this->commenters;
+    }
+
+    public function addCommenter(Commenter $commenter): static
+    {
+        if (!$this->commenters->contains($commenter)) {
+            $this->commenters->add($commenter);
+            $commenter->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommenter(Commenter $commenter): static
+    {
+        if ($this->commenters->removeElement($commenter)) {
+            // set the owning side to null (unless already changed)
+            if ($commenter->getUser() === $this) {
+                $commenter->setUser(null);
             }
         }
 
