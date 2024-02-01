@@ -78,4 +78,23 @@ class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/bycatProduit/{id_cat}', name: 'app_produit_bycatProduit', methods: ['GET'])]
+    public function searchByCategory(Request $request, ProduitRepository $produitRepository, $id_cat ): Response
+    {
+
+      
+        $produit = $produitRepository->findBy(
+            ['cat' => $id_cat]
+        );
+
+        dd($produit);
+
+
+        return $this->render('product/search_results.html.twig', [
+            'produit' => $produit,
+        ]);
+    }
+
+    
+
 }
