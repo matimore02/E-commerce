@@ -39,4 +39,6 @@
     <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
 
     {{ include('produit/_delete_form.html.twig') }}
+    <input type="number" id="quantite">
+    <button id="{{ produit.id }}" onclick="addToPanier({{ produit.id }})">Ajouter au panier</button>
 {% endblock %}

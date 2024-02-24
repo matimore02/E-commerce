@@ -9,6 +9,8 @@
 </style>
 
 <div class="example-wrapper">
-
+    {% for produit in  produits %}
+            <a href="{{ path('app_produit_show', {'id': produit.id}) }}">{{ produit.nomPro }}</a>
+    {% endfor %}
 </div>
 {% endblock %}
