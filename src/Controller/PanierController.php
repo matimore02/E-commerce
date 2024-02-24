@@ -37,6 +37,7 @@ class PanierController extends AbstractController
         $data = [];
         foreach ($composers as $composer) {
             $data[] = [
+                'id_composer' => $composer->getId(),
                 'nom_produit' => $composer->getIdPro()->getNomPro(),
                 'quantite' => $composer->getQuantite(),
             ];
@@ -72,9 +73,62 @@ class PanierController extends AbstractController
             return new JsonResponse(['success' => false, 'message' => $exception->getMessage()], 500);
         }
             return new JsonResponse(['status' => 'OK'], $code);
+    }
 
 
+    #[Route('/api/removeproduitcomposer', name: 'app_api_removeProduitFromComposer')]
+    public function removeProduitFromComposer(Security $security,ComposerRepository  $composersRepository, EntityManagerInterface $entityManager, PanierRepository $panierRepository, Request $request): Response {
 
+        $data = json_decode($request->getContent(), true);
 
+        if (!isset($data['id'])) {
+            return new JsonResponse(['success' => false, 'message' => 'L\'identifiant n\'a pas été fourni'], 400);
+        }
+    
+      
+        $id = $data['id'];
+        $composer = $composersRepository->find($data);
+   
+
+        if (!$composer) {   
+            return new JsonResponse(['success' => false, 'message' => 'L\'élément n\'existe pas'], 404);
+        }
+        try {
+            $entityManager->remove($composer);
+            $entityManager->flush();
+        } catch (\Exception $exception) {
+            return new JsonResponse(['success' => false, 'message' => $exception->getMessage()], 500);
+        }
+
+        return new JsonResponse(['status' => 'OK'], 200);
+    }
+
+    #[Route('/api/changequantiteproduit', name: 'app_api_changeQuantiteProduit', methods: ['POST'])]
+    public function changeQuantiteProduit(Request $request, ComposerRepository $composerRepository, EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if (!isset($data['id']) || !isset($data['quantite'])) {
+            return new JsonResponse(['success' => false, 'message' => 'Les informations requises sont manquantes'], 400);
+        }
+
+        $idComposer = $data['id'];
+        $nouvelleQuantite = $data['quantite'];
+
+        $composer = $composerRepository->find($idComposer);
+
+        if (!$composer) {
+            return new JsonResponse(['success' => false, 'message' => 'Le produit n\'existe pas'], 404);
+        }
+
+        $composer->setQuantite($nouvelleQuantite);
+
+        try {
+            $entityManager->flush();
+        } catch (\Exception $exception) {
+            return new JsonResponse(['success' => false, 'message' => $exception->getMessage()], 500);
+        }
+
+        return new JsonResponse(['success' => true, 'message' => 'La quantité du produit a été mise à jour avec succès'], 200);
     }
 }
