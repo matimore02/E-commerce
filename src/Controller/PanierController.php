@@ -8,6 +8,7 @@ use App\Entity\Produit;
 use App\Repository\ComposerRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\EtatRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -46,19 +47,26 @@ class PanierController extends AbstractController
     }
 
     #[Route('/api/addproduitcomposer', name: 'app_api_addProduitToComposer')]
-    public function addProduitToComposer(Security $security, EntityManagerInterface $entityManager,PanierRepository $panierRepository,Request $request): Response
+    public function addProduitToComposer(Security $security, EntityManagerInterface $entityManager,PanierRepository $panierRepository,Request $request,EtatRepository $etatRepository): Response
     {
 
         $data = json_decode($request->getContent());
 
             $code = 200;
-            $id_user = $security->getUser();
+            $user = $security->getUser();
 
-
+          
             $panierUserEnCours = $panierRepository->findOneBy(
-                ['user' => $id_user->getId(), 'etat' => '1'],
+                ['user' => $user->getId(), 'etat' => '1'],
             );
-
+            if (!$panierUserEnCours){
+                $panier = New Panier();
+                $panier->setIdUse($user);
+                $panier->setIdEta($etatRepository->findOneById(1));
+                $entityManager->persist($panier);
+                $entityManager->flush();
+            }
+            
             $produit = $entityManager->getRepository(Produit::class)->find($data->produit);
 
             $composer = new Composer;
