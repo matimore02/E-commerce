@@ -11,9 +11,11 @@
 
         {% block javascripts %}
             {{ importmap() }}
+            <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script>
         {% endblock %}
     </head>
     <body>
+    <div id="panierContainer"></div>
         {% block body %}{% endblock %}
     </body>
 </html>
