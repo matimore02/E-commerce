@@ -1,4 +1,6 @@
 function addToPanier(idProduit) {
+
+    
     const apiUrl = 'http://localhost:8000/panier/api/addproduitcomposer';
 
     let quantite = document.getElementById('quantite')

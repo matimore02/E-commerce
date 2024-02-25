@@ -139,4 +139,22 @@ class PanierController extends AbstractController
 
         return new JsonResponse(['success' => true, 'message' => 'La quantité du produit a été mise à jour avec succès'], 200);
     }
+
+    #[Route('/api/getproduit/{id}', name: 'app_api_getproduitbyid', methods: ['GET'])]
+    public function getProduitByid($id,ProduitRepository $produitRepository): Response
+    {
+        $produit = $produitRepository->find($id);
+
+        if (!$produit) {
+        
+            return new JsonResponse(['message' => 'Produit non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+        $data = [
+            'id_produit' => $produit->getId(),
+            'nom_produit' => $produit->getNomPro(),
+        ];
+
+        return new JsonResponse($data, Response::HTTP_OK);
+    }
+
 }
