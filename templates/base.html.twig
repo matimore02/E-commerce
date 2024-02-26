@@ -11,11 +11,18 @@
 
         {% block javascripts %}
             {{ importmap() }}
-            <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script>
+            {# <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script> #}
         {% endblock %}
     </head>
     <body>
+    {% if app.user %}
+       <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script>
+    {% else %}
+        <script src="{{ asset('asset/js/AddProduitPanier.js') }}"></script>
+    {% endif %}
     <div id="panierContainer"></div>
-        {% block body %}{% endblock %}
+    
+
+    {% block body %}{% endblock %}
     </body>
 </html>
