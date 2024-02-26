@@ -8,6 +8,8 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ProduitType extends AbstractType
 {
@@ -17,13 +19,29 @@ class ProduitType extends AbstractType
             ->add('nom_pro')
             ->add('prix_pro')
             ->add('quantite_pro')
-            ->add('img_pro')
             ->add('description_pro')
             ->add('cat', EntityType::class, [
                 'class' => CatProduit::class,
                 'choice_label' => 'libelle',
             ])
-        ;
+       
+        ->add('img_pro', FileType::class, [
+            'label' => 'Image du produit',
+            'mapped' => false,
+            'required' => false,
+            'constraints' => [
+                new File([
+                    'maxSize' => '1024k',
+                    'mimeTypes' => [
+                        'image/jpeg',
+                        'image/jpg',
+                    ],
+                    'mimeTypesMessage' => 'Please upload photo',
+                ])
+            ],
+        ])
+     
+    ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
