@@ -118,7 +118,7 @@ function uuidv4() {
 }
 
 
-console.log(localStorage)
+
 function changeQuantite(idProduit, nouvelleQuantite) {
   
     let panierData = JSON.parse(localStorage.getItem('panier')) || [];

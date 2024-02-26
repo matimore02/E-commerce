@@ -1,6 +1,4 @@
 function addToPanier(idProduit) {
-
-    
     const apiUrl = 'http://localhost:8000/panier/api/addproduitcomposer';
 
     let quantite = document.getElementById('quantite')
@@ -174,5 +172,37 @@ function changeQuantite(idProduit, nouvelleQuantite) {
         })
         .catch(error => {
             console.error('Erreur lors de la requête fetch:', error.message);
+        });
+
+
+}
+
+function addProduitFromLocalStorage(idPro,quantitePro){
+    const apiUrl = 'http://localhost:8000/panier/api/addproduitcomposer';
+
+    let requestBody = {};
+    requestBody.quantite = quantitePro;
+    requestBody.produit = idPro;
+    console.log(requestBody)
+    //console.log(JSON.stringify(requestBody))
+    return fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',  //
+        },
+        body: JSON.stringify(requestBody),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            getPanierByUser()
+        })
+        .catch(error => {
+            console.error('Une erreur s\'est produite lors de l\'ajout du produit:', error.message);
+            throw error;
         });
 }
