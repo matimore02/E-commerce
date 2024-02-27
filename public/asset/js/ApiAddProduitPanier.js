@@ -75,10 +75,19 @@ function getPanierByUser() {
                 };
                 panierContainer.appendChild(buttonproduitElement);
 
-
+                let prixProduit = document.createElement('p');
+                prixProduit.textContent = produit.quantite * produit.prix_produit;
+                let idPrixProduit = 'prix' + produit.id_composer;
+                prixProduit.setAttribute('id', idPrixProduit);
+                panierContainer.appendChild(prixProduit);
             });
+                let totalPrix = document.createElement('p');
+                totalPrix.setAttribute('id', 'totalPrix');
+                panierContainer.appendChild(totalPrix);
 
                 addSelectChangeEventListeners()
+
+                calculPrixTotal()
             return data;
         })
         .catch(error => {
@@ -99,11 +108,13 @@ function addSelectChangeEventListeners() {
     let selectsQuantite = document.querySelectorAll('select');
 
     selectsQuantite.forEach(function(selectQuantite) {
+        let acienneQuantite = selectQuantite.value
         selectQuantite.addEventListener('change', function(event) {
             let idProduit = selectQuantite.id;
-          
+
             let nouvelleQuantite = parseInt(event.target.value); 
-            console.log(idProduit,nouvelleQuantite)
+
+            changerPrix(idProduit,selectQuantite,acienneQuantite)
             changeQuantite(idProduit, nouvelleQuantite);
         });
     });
@@ -147,7 +158,6 @@ function changeQuantite(idProduit, nouvelleQuantite) {
         id: parseInt(idProduit),
         quantite: nouvelleQuantite
     };
-    console.log(data)
     let options = {
         method: 'POST',
         headers: {
@@ -205,4 +215,22 @@ function addProduitFromLocalStorage(idPro,quantitePro){
             console.error('Une erreur s\'est produite lors de l\'ajout du produit:', error.message);
             throw error;
         });
+}
+
+function calculPrixTotal(){
+    let elementsPrix = document.querySelectorAll('[id^="prix"]');
+    let total = 0;
+
+    elementsPrix.forEach(element => {
+        total += parseFloat(element.textContent.trim());
+    });
+    let prixTotal = document.getElementById('totalPrix');
+    prixTotal.innerHTML = total + "€";
+}
+
+function changerPrix(idProduit,selectQuantite,acienneQuantite){
+    let idProduitPrix = document.getElementById("prix"+idProduit);
+
+    idProduitPrix.innerHTML=(idProduitPrix.innerHTML / acienneQuantite ) * selectQuantite.value;
+    calculPrixTotal()
 }

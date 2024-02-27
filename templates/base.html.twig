@@ -11,24 +11,24 @@
 
         {% block javascripts %}
             {{ importmap() }}
-            {# <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script> #}
+            {% if app.user %}
+            <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script>
+            <script>
+
+                let data = JSON.parse(localStorage.getItem('panier')) || [];
+                console.log()
+                data.forEach(function (produit, index) {
+                    addProduitFromLocalStorage(produit.id_produit,produit.quantite_produit)
+                });
+                localStorage.clear();
+            </script>
+            {% else %}
+            <script src="{{ asset('asset/js/AddProduitPanier.js') }}"></script>
+            {% endif %}
         {% endblock %}
     </head>
     <body>
-    {% if app.user %}
-       <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script>
-        <script>
 
-            let data = JSON.parse(localStorage.getItem('panier')) || [];
-            console.log()
-            data.forEach(function (produit, index) {
-                addProduitFromLocalStorage(produit.id_produit,produit.quantite_produit)
-            });
-            localStorage.clear();
-        </script>
-    {% else %}
-        <script src="{{ asset('asset/js/AddProduitPanier.js') }}"></script>
-    {% endif %}
     <div id="panierContainer"></div>
     
 
