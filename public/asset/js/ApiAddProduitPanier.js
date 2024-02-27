@@ -81,13 +81,13 @@ function getPanierByUser() {
                 prixProduit.setAttribute('id', idPrixProduit);
                 panierContainer.appendChild(prixProduit);
             });
-                let totalPrix = document.createElement('p');
-                totalPrix.setAttribute('id', 'totalPrix');
-                panierContainer.appendChild(totalPrix);
+            let totalPrix = document.createElement('p');
+            totalPrix.setAttribute('id', 'totalPrix');
+            panierContainer.appendChild(totalPrix);
 
-                addSelectChangeEventListeners()
+            addSelectChangeEventListeners()
 
-                calculPrixTotal()
+            calculPrixTotal()
             return data;
         })
         .catch(error => {

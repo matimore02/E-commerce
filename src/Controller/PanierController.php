@@ -153,6 +153,7 @@ class PanierController extends AbstractController
         $data = [
             'id_produit' => $produit->getId(),
             'nom_produit' => $produit->getNomPro(),
+            'prix_produit' => $produit->getPrixPro(),
         ];
 
         return new JsonResponse($data, Response::HTTP_OK);
