@@ -40,6 +40,7 @@ class PanierController extends AbstractController
             $data[] = [
                 'id_composer' => $composer->getId(),
                 'nom_produit' => $composer->getIdPro()->getNomPro(),
+                'prix_produit' => $composer->getIdPro()->getPrixPro(),
                 'quantite' => $composer->getQuantite(),
             ];
         }
