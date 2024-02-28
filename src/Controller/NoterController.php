@@ -28,21 +28,11 @@ class NoterController extends AbstractController
             ['produit' => $idProduit ],
 
         );
-        // dd($notes);
-        // Supposons que $notes est un tableau contenant les notes du produit
-            // $notes = [4, 5, 3, 5, 4];
-
-        // Initialisation de la somme et du compteur
         $somme = 0;
         $compteur = 0;
 
-        // Parcours des notes avec une boucle foreach
         foreach ($notes as $note) {
-            // Ajout de la note à la somme
             $somme += $note->getNote();
-            
-            
-            // Incrémentation du compteur à chaque itération
             $compteur++;
         }
 
@@ -56,9 +46,10 @@ class NoterController extends AbstractController
         
         $user = $security->getUser();
         if($user){
-            $userNote = $noterRepository->findBy(
+            $userNote = $noterRepository->findOneBy(
             ['produit' => $idProduit ,'user' =>$user],
-            ); 
+
+            );
             if (!$userNote){
                 $userNote="Pas encore noté";
             }
@@ -66,11 +57,10 @@ class NoterController extends AbstractController
             $userNote = 'null';
         }
        
-
+        
         $data = [
-
             'moyenne_note' => $moyenne,
-            'user_note' => $userNote,
+            'user_note' => $userNote->getNote(),
          ];
         return new JsonResponse($data);
     }
