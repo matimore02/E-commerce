@@ -35,17 +35,19 @@ class AdresseController extends AbstractController
         ]);
     }
     #[Route('/new', name: 'app_adresse_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,Security $security): Response
     {
         $adresse = new Adresse();
         $form = $this->createForm(AdresseType::class, $adresse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $adresse->setUser($security->getUser());
             $entityManager->persist($adresse);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_adresse_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_show', ['id' => $security->getUser()->getId()], Response::HTTP_SEE_OTHER);
+
         }
 
         return $this->render('adresse/new.html.twig', [

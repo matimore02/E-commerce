@@ -1,16 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello DefaultController!{% endblock %}
-
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('asset/css/styleHomePage.css') }}">
+{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    {% for produit in  produits %}
-            <a href="{{ path('app_produit_show', {'id': produit.id}) }}">{{ produit.nomPro }}</a>
-    {% endfor %}
-</div>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Bienvenue sur notre site e-commerce</h2>
+            <p>Découvrez notre large sélection de produits de qualité.</p>
+            <a href="#" class="btn">Découvrir notre catalogue</a>
+        </div>
+    </section>
+    <section class="products">
+        <h2>Nos Produits</h2>
+        <div class="containerProduit">
+
+            {% for produit in  produits %}
+                <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="linkProduit product">
+                    <div >
+                        <img src="{{ asset('uploads/images/' ~ produit.imgPro) }}" alt="{{ produit.nomPro }}" class="imgProduit">
+
+                        <h3>{{ produit.nomPro }}</h3>
+                        <p>{{ produit.descriptionPro }}</p>
+                        <span class="price">{{ produit.prixPro }}€</span>
+                    </div>
+                </a>
+            {% endfor %}
+
+        </div>
+    </section>
+
 {% endblock %}

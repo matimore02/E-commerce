@@ -47,13 +47,48 @@ function getPanierByUser() {
 
             data.forEach(function (produit, index) {
 
-                let produitElement = document.createElement('p');
+
+
+                let cartItem =document.createElement('div');
+                cartItem.classList.add('cart-item');
+
+                panierContainer.appendChild(cartItem);
+
+                let linkProduit = document.createElement('a')
+                linkProduit.setAttribute('href', '/produit/' + produit.id_produit);
+                linkProduit.classList.add('linkProduit');
+                cartItem.appendChild(linkProduit);
+
+                var imageElement = document.createElement('img');
+                imageElement.src = "/uploads/images/"+ produit.image_produit;
+                linkProduit.appendChild(imageElement);
+
+                var itemDetails = document.createElement("div");
+                itemDetails.classList.add('item-details');
+                cartItem.appendChild(itemDetails);
                 //produitElement.setAttribute('id', produit.id_composer);
+
+                let produitElement = document.createElement('h3');
                 produitElement.textContent = ` ${produit.nom_produit}`;
-                panierContainer.appendChild(produitElement);
+                itemDetails.appendChild(produitElement);
+
+
+                let description_produit = document.createElement('p');
+                description_produit.textContent = ` ${produit.description_produit}`;
+                itemDetails.appendChild(description_produit);
+
+
+                let prixProduit = document.createElement('span');
+                prixProduit.innerHTML =produit.prix_produit + "€";
+                prixProduit.setAttribute('id', produit.id_composer);
+                prixProduit.setAttribute('value', produit.prix_produit);
+                prixProduit.classList.add('price');
+                itemDetails.appendChild(prixProduit);
+
 
                 let selectQuantite = document.createElement('select');
                 selectQuantite.setAttribute('id', produit.id_composer);
+                selectQuantite.classList.add('selectNumberProduct');
                 for (let i = 1; i <= 30; i++) {
                     let option = document.createElement('option');
                     option.value = i;
@@ -63,23 +98,27 @@ function getPanierByUser() {
 
                 selectQuantite.value = produit.quantite;
 
-                panierContainer.appendChild(selectQuantite);
+                cartItem.appendChild(selectQuantite);
 
 
 
                 let buttonproduitElement = document.createElement('button');
-                buttonproduitElement.textContent = "enlever Produit";
-
+                buttonproduitElement.textContent = "Enlever Produit";
+                buttonproduitElement.classList.add('remove-btn');
                 buttonproduitElement.onclick = function() {
                     removeProduitComposerPanier(produit.id_composer); 
                 };
-                panierContainer.appendChild(buttonproduitElement);
+                cartItem.appendChild(buttonproduitElement);
 
-                let prixProduit = document.createElement('p');
-                prixProduit.textContent = produit.quantite * produit.prix_produit;
+
+                let totalPriceByProduit = document.createElement('p');
+                totalPriceByProduit.classList.add('sousTotal');
+                totalPriceByProduit.textContent = produit.quantite * produit.prix_produit;
                 let idPrixProduit = 'prix' + produit.id_composer;
-                prixProduit.setAttribute('id', idPrixProduit);
-                panierContainer.appendChild(prixProduit);
+                totalPriceByProduit.setAttribute('id', idPrixProduit);
+                panierContainer.appendChild(totalPriceByProduit);
+
+
             });
             let totalPrix = document.createElement('p');
             totalPrix.setAttribute('id', 'totalPrix');
@@ -174,11 +213,7 @@ function changeQuantite(idProduit, nouvelleQuantite) {
             return response.json();
         })
         .then(data => {
-            if (data.success) {
-                console.log('La quantité du produit a été mise à jour avec succès.');
-            } else {
-                console.error('Erreur lors de la mise à jour de la quantité du produit:', data.message);
-            }
+
         })
         .catch(error => {
             console.error('Erreur lors de la requête fetch:', error.message);
@@ -224,13 +259,15 @@ function calculPrixTotal(){
     elementsPrix.forEach(element => {
         total += parseFloat(element.textContent.trim());
     });
-    let prixTotal = document.getElementById('totalPrix');
+    let prixTotal = document.getElementById('totalPrice');
     prixTotal.innerHTML = total + "€";
 }
 
 function changerPrix(idProduit,selectQuantite,acienneQuantite){
     let idProduitPrix = document.getElementById("prix"+idProduit);
 
-    idProduitPrix.innerHTML=(idProduitPrix.innerHTML / acienneQuantite ) * selectQuantite.value;
+    var spanId = document.querySelector('span[id="' + idProduit + '"]');
+
+    idProduitPrix.innerHTML=spanId.getAttribute('value') * selectQuantite.value;
     calculPrixTotal()
 }

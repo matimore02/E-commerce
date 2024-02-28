@@ -6,32 +6,51 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+            <link rel="stylesheet" href="{{ asset('asset/css/styleHomePage.css') }}">
             {{ ux_controller_link_tags() }}
         {% endblock %}
 
-        {% block javascripts %}
-            {{ importmap() }}
-            {% if app.user %}
-            <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script>
-            <script>
 
-                let data = JSON.parse(localStorage.getItem('panier')) || [];
-                console.log()
-                data.forEach(function (produit, index) {
-                    addProduitFromLocalStorage(produit.id_produit,produit.quantite_produit)
-                });
-                localStorage.clear();
-            </script>
-            {% else %}
-            <script src="{{ asset('asset/js/AddProduitPanier.js') }}"></script>
-            {% endif %}
-        {% endblock %}
     </head>
     <body>
 
-    <div id="panierContainer"></div>
+
+    <header>
+        <div class="headertop">
+            <nav>
+                <ul>
+                    <li><a href="#">Accueil</a></li>
+                    <li><a href="#">Profil</a></li>
+                    <li><a href="{{ path("app_panier") }}">Panier[ ]</a></li>
+                    <li><a href="#">Connexion</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="imglogo">
+            <img src="{{ asset("asset/img/logoECOSERVICE.png") }}" />
+            <h3>ÉCO-SERVICE</h3>
+        </div>
+        <div class="headerbottom">
+            <nav>
+                <ul>
+                    <li><a href="#">CATEGORIE1</a></li>
+                    <li><a href="#">CATEGORIE2</a></li>
+                    <li><a href="#">CATEGORIE3</a></li>
+                    <li><a href="#">CATEGORIE4</a></li>
+                    <li><a href="#">CATEGORIE5</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </header>
+
     
 
     {% block body %}{% endblock %}
+    <footer>
+        <div class="container">
+            <p> 2024 Mon Site E-commerce. Tous droits réservés.</p>
+        </div>
+    </footer>
     </body>
 </html>

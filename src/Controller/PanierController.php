@@ -42,6 +42,9 @@ class PanierController extends AbstractController
                 'nom_produit' => $composer->getIdPro()->getNomPro(),
                 'prix_produit' => $composer->getIdPro()->getPrixPro(),
                 'quantite' => $composer->getQuantite(),
+                'image_produit' => $composer->getIdPro()->getImgPro(),
+                'description_produit' => $composer->getIdPro()->getDescriptionPro(),
+                'id_produit' => $composer->getIdPro()->getId(),
             ];
         }
         return new JsonResponse($data, 200);
@@ -157,6 +160,14 @@ class PanierController extends AbstractController
         ];
 
         return new JsonResponse($data, Response::HTTP_OK);
+    }
+    #[Route('/', name: 'app_panier', methods: ['GET'])]
+    public function panier(ProduitRepository $produitRepository): Response
+    {
+        $produits = $produitRepository->findAll();
+        return $this->render('panier/index.html.twig', [
+            'produits'=> $produits,
+        ]);
     }
 
 }
