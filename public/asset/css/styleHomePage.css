@@ -1,0 +1,167 @@
+html{
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  header {
+    color: #333;
+  }
+  header h1 {
+    margin: 0;
+    padding: 0;
+  }
+  .imglogo
+  {
+    text-align: center;
+
+  }
+  .imglogo h3
+  {
+    margin: 0px;
+  }
+  .imglogo img
+  {
+    width:150px;
+  }
+  .headertop
+  {
+    position:fixed;
+    right:0px;
+    width:300px;
+    padding-right:2%;
+    padding-left:1%;
+    border-bottom-left-radius: 15px;
+    border: 1px solid grey;
+    border-top:0px;
+    border-right:0px;
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: white;
+  }
+  .headertop nav
+  {
+    width:100%;
+  }
+  .headertop ul
+  {
+    display:flex;
+    justify-content: space-between;
+  }
+
+  .headerbottom
+  {
+    background: #333;
+  }
+  .headerbottom nav{
+  text-align: center;
+  }
+  nav ul li {
+    display: inline;
+    font-weight: bold;
+
+  }
+ ul{
+    margin:0px;
+    padding:0px;
+    
+   }
+   
+  .headerbottom ul{
+    display:flex;
+    justify-content: space-between;
+    width:800px;
+    margin:auto;
+  }
+  .headertop nav ul li a {
+    color: #333;
+    text-decoration: none;
+   
+  }
+  .headerbottom nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size:1.3em;
+
+  }
+  .container {
+    width: 80%;
+    margin: auto;
+  }
+
+  .hero {
+    background: #f4f4f4;
+    text-align: center;
+    padding: 2rem 0;
+  }
+  .hero h2 {
+    margin-bottom: 20px;
+  }
+
+  .btn {
+    display: inline-block;
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+
+.product {
+    flex: 0 0 calc(33.33% - 20px);
+    height: auto;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+  
+  .product {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .product img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+  }
+
+  .price {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 50px;
+      position: relative;
+      bottom: 0;
+  }
+  .linkProduit{
+      text-decoration: none;
+      color: black;
+  }
+  .containerProduit{
+      width: 80%;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+
+  }
+  .imgProduit{
+      width:80%;
+      height: 80%;
+  }

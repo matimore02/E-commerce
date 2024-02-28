@@ -35,6 +35,7 @@ class ProduitType extends AbstractType
                     'mimeTypes' => [
                         'image/jpeg',
                         'image/jpg',
+                        'image/png'
                     ],
                     'mimeTypesMessage' => 'Please upload photo',
                 ])

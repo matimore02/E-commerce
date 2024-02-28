@@ -3,6 +3,22 @@
 {% block title %}Produit{% endblock %}
 
 {% block body %}
+    {% block javascripts %}
+        {% if app.user %}
+            <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script>
+            <script>
+
+                let data = JSON.parse(localStorage.getItem('panier')) || [];
+                console.log()
+                data.forEach(function (produit, index) {
+                    addProduitFromLocalStorage(produit.id_produit,produit.quantite_produit)
+                });
+                localStorage.clear();
+            </script>
+        {% else %}
+            <script src="{{ asset('asset/js/AddProduitPanier.js') }}"></script>
+        {% endif %}
+    {% endblock %}
     <h1>Produit</h1>
 
     <table class="table">
