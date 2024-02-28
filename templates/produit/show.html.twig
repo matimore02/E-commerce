@@ -4,6 +4,80 @@
 
 {% block body %}
     {% block javascripts %}
+
+        <script>
+            function  getNoteProduit(idProduit){
+                let apiUrl = "http://localhost:8000/noter/api/getnotebyidproduit/" +idProduit;
+                let noteProduit = document.getElementById("noteProduit")
+                let selectNote = document.getElementById("selectNote")
+                let nombreNote = document.getElementById("nombreNote")
+                return fetch(apiUrl)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+
+                        noteProduit.innerHTML = "";
+                        noteProduit.innerHTML = data.moyenne_note;
+                        selectNote.value = data.user_note;
+                        selectNote.setAttribute('id', 'selectNote');
+                        nombreNote.innerHTML = data.nombre_note;
+                        //selectNote.setAttribute('id', data.id_note);
+                    })
+                    .catch(error => {
+                        console.error('Une erreur s\'est produite:', error.message);
+                        throw error;
+                    });
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+                getNoteProduit({{ produit.id }})
+
+                let selectNote = document.getElementById("selectNote")
+
+                selectNote.addEventListener('change', function(event) {
+                  console.log(selectNote.value)
+                    updateNote(selectNote.value)
+                });
+            });
+
+            function updateNote(slectNewNote){
+                var currentUrl = window.location.href;
+
+                var urlParts = currentUrl.split('/');
+
+                var produitIndex = urlParts.indexOf('produit');
+
+                let data = {
+                    id_produit: parseInt(produitIndex),
+                    note: slectNewNote,
+                };
+                console.log(data)
+                let options = {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                };
+                let apiUrl ="http://localhost:8000/noter/api/updatenoteproduit";
+                fetch(apiUrl, options)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erreur lors de la requête HTTP: ' + response.status);
+                        }
+                        getNoteProduit({{ produit.id }})
+                    })
+                    .then(data => {
+
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la requête fetch:', error.message);
+                    });
+            }
+        </script>
         {% if app.user %}
             <script src="{{ asset('asset/js/ApiAddProduitPanier.js') }}"></script>
             <script>
@@ -15,9 +89,12 @@
                 });
                 localStorage.clear();
             </script>
+
         {% else %}
             <script src="{{ asset('asset/js/AddProduitPanier.js') }}"></script>
         {% endif %}
+
+
     {% endblock %}
     <h1>Produit</h1>
 
@@ -49,13 +126,19 @@
             </tr>
         </tbody>
     </table>
-    
 
-    <a href="{{ path('app_produit_index') }}">back to list</a>
+    <span id="noteProduit"> #</span>
+    <p>Nombre d'avis : <span id="nombreNote"></span></p>
+    <select id="selectNote">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <br>
 
-    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
 
-    {{ include('produit/_delete_form.html.twig') }}
     <input type="number" id="quantite">
     <button id="{{ produit.id }}" onclick="addToPanier({{ produit.id }})">Ajouter au panier</button>
 

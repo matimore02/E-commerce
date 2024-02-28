@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Noter;
 use App\Repository\NoterRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 #[Route('/noter')]
 class NoterController extends AbstractController
@@ -41,9 +43,6 @@ class NoterController extends AbstractController
         } else {
         }
 
-        
-      
-        
         $user = $security->getUser();
         if($user){
             $userNote = $noterRepository->findOneBy(
@@ -52,19 +51,60 @@ class NoterController extends AbstractController
             );
             if (!$userNote){
                 $userNote="Pas encore noté";
+                $userNoteId="Pas encore noté";
+            }else{
+                $userNote =$userNote->getNote();
+                $userNoteId=$userNote->getId();
             }
+
+
         }else{
             $userNote = 'null';
         }
        
-        
+
         $data = [
             'moyenne_note' => $moyenne,
-            'user_note' => $userNote->getNote(),
+            'user_note' => $userNote,
+            'nombre_note' => $compteur,
+            'id_produit' => $idProduit,
+            'id_note' =>$userNoteId,
          ];
         return new JsonResponse($data);
     }
+    #[Route('/api/updatenoteproduit', name: 'app_api_updatenoteproduit', methods: ['PUT'])]
+    public function updatenoteproduit(Request $request, EntityManagerInterface $entityManager,Security $security,NoterRepository $noterRepository): Response
+    {
+        // Récupérer les données de la requête
+        $requestData = json_decode($request->getContent(), true);
 
+
+        $noteValue = $requestData['note'];
+        $idProduit = $requestData['id_produit'];
+
+        $user = $security->getUser();
+        if($user){
+            $note = $noterRepository->findOneBy(
+                ['produit' => $idProduit ,'user' =>$user],
+            );
+            if (!$note){
+                $note="Pas encore noté";
+            }
+        }else{
+            $note = 'null';
+        }
+
+
+        if (!$note) {
+            return new JsonResponse(['error' => 'Note not found'], JsonResponse::HTTP_NOT_FOUND);
+        }
+
+        $note->setNote($noteValue);
+
+        $entityManager->flush();
+
+        return new JsonResponse(['status' => 'OK'], JsonResponse::HTTP_OK);
+    }
     //#[Route('/api/addnoteproduit', name: 'app_api_addNoteToProduit')]
     //public function addNoteToProduit(Security $security): Response
     //{
