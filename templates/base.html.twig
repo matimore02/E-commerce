@@ -19,10 +19,14 @@
         <div class="headertop">
             <nav>
                 <ul>
-                    <li><a href="#">Accueil</a></li>
-                    <li><a href="#">Profil</a></li>
+                    <li><a href="{{path('app_default') }}" >Accueil</a></li>
                     <li><a href="{{ path("app_panier") }}">Panier[ ]</a></li>
-                    <li><a href="#">Connexion</a></li>
+                    {% if app.user == null %}
+                    <li><a href="{{ path("app_login") }}">Connexion</a></li>
+                    {% else %}
+                        <li><a href="{{ path("app_user_show") }}">Profile</a></li>
+                        <li><a href="{{ path("app_logout") }}">Déconexion</a></li>
+                    {% endif %}
                 </ul>
             </nav>
         </div>
