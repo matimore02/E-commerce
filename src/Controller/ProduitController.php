@@ -12,6 +12,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use App\Entity\Commenter;
+use App\Repository\CommenterRepository;
+use App\Form\Commenter1Type;
+use Symfony\Bundle\SecurityBundle\Security;
+use DateTime;
+
 
 #[Route('/produit')]
 class ProduitController extends AbstractController
@@ -76,16 +82,37 @@ class ProduitController extends AbstractController
 
     }
 
-    #[Route('/{id}', name: 'app_produit_show', methods: ['GET'])]
-    public function show(Produit $produit): Response
+    #[Route('/{id}', name: 'app_produit_show', methods: ['GET', 'POST'])]
+    public function show($id,Produit $produit, CommenterRepository $commentaireRepository, Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
+        $commentaires = $commentaireRepository->findBy(['produit' => $produit]);
 
-       
+        $commentaire = new Commenter();
+        
+        $commentForm = $this->createForm(Commenter1Type::class, $commentaire);//,['produit' => $id]
+        $commentForm->handleRequest($request);
+
+
+        if ($commentForm->isSubmitted() && $commentForm->isValid()) {
+            $commentaire->setProduit($produit);
+            $commentaire->setDateCommentaire(new DateTime());
+        
+           // Récupérer automatiquement l'utilisateur connecté
+            $user = $security->getUser();
+            $commentaire->setUser($user);
+    
+            $entityManager->persist($commentaire);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_produit_show', ['id' => $produit->getId()]);
+        }
+
         return $this->render('produit/show.html.twig', [
             'produit' => $produit,
+            'commentaires' => $commentaires,
+            'form' => $commentForm->createView(),
         ]);
     }
-
     #[Route('/{id}/edit', name: 'app_produit_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
@@ -125,7 +152,6 @@ class ProduitController extends AbstractController
             ['cat' => $id_cat]
         );
 
-        dd($produit);
 
 
         return $this->render('product/search_results.html.twig', [
