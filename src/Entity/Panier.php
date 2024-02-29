@@ -21,10 +21,10 @@ class Panier
     #[ORM\ManyToOne(inversedBy: 'paniers')]
     private ?Etat $etat = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_pan', targetEntity: Acheter::class)]
+    #[ORM\OneToMany(mappedBy: 'panier', targetEntity: Acheter::class)]
     private Collection $acheters;
 
-    #[ORM\OneToMany(mappedBy: 'id_pan', targetEntity: Composer::class)]
+    #[ORM\OneToMany(mappedBy: 'panier', targetEntity: Composer::class)]
     private Collection $composers;
 
     public function __construct()
