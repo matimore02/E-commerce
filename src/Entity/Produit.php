@@ -43,11 +43,15 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Commenter::class, orphanRemoval: true)]
     private Collection $commenters;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ProduitToDiy::class)]
+    private Collection $produitToDiys;
+
     public function __construct()
     {
         $this->composers = new ArrayCollection();
         $this->noters = new ArrayCollection();
         $this->commenters = new ArrayCollection();
+        $this->produitToDiys = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -211,6 +215,36 @@ class Produit
             // set the owning side to null (unless already changed)
             if ($commenter->getProduit() === $this) {
                 $commenter->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProduitToDiy>
+     */
+    public function getProduitToDiys(): Collection
+    {
+        return $this->produitToDiys;
+    }
+
+    public function addProduitToDiy(ProduitToDiy $produitToDiy): static
+    {
+        if (!$this->produitToDiys->contains($produitToDiy)) {
+            $this->produitToDiys->add($produitToDiy);
+            $produitToDiy->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitToDiy(ProduitToDiy $produitToDiy): static
+    {
+        if ($this->produitToDiys->removeElement($produitToDiy)) {
+            // set the owning side to null (unless already changed)
+            if ($produitToDiy->getProduit() === $this) {
+                $produitToDiy->setProduit(null);
             }
         }
 

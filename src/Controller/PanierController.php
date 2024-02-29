@@ -63,6 +63,8 @@ class PanierController extends AbstractController
             $panierUserEnCours = $panierRepository->findOneBy(
                 ['user' => $user->getId(), 'etat' => '1'],
             );
+
+            dd($panierUserEnCours->getComposers()->get);
             if (!$panierUserEnCours){
                 $panier = New Panier();
                 $panier->setIdUse($user);
@@ -153,12 +155,14 @@ class PanierController extends AbstractController
         
             return new JsonResponse(['message' => 'Produit non trouvé'], Response::HTTP_NOT_FOUND);
         }
-        $data = [
-            'id_produit' => $produit->getId(),
+
+        $data= [
             'nom_produit' => $produit->getNomPro(),
             'prix_produit' => $produit->getPrixPro(),
+            'image_produit' => $produit->getImgPro(),
+            'description_produit' => $produit->getDescriptionPro(),
+            'id_produit' => $produit->getId(),
         ];
-
         return new JsonResponse($data, Response::HTTP_OK);
     }
     #[Route('/', name: 'app_panier', methods: ['GET'])]
