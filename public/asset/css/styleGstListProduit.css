@@ -1,0 +1,267 @@
+/* Style de base pour le corps de la page */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  display:flex;
+  margin:0px;
+}
+
+.flexbox
+{
+	display:flex;
+}
+
+/* Style de la section du back-office */
+.admin-section {
+  padding: 20px;
+  position:fixed;
+  height:100%;
+  top:0;
+  left:200px;
+  overflow-y:scroll;
+  padding-bottom:150px;
+}
+
+/* Style du titre de la section */
+.admin-section h2 {
+  margin-bottom: 20px;
+}
+
+/* Style du tableau des comptes */
+.account-table {
+  width: 100%;
+  border-collapse: collapse;
+  position: relative; /* Permettre le positionnement relatif */
+  overflow-x: auto; /* Activer le défilement horizontal */
+}
+
+/* Style de l'en-tête du tableau */
+.account-table thead th {
+  background-color: #f4f4f4;
+  padding: 10px;
+  text-align: left;
+}
+
+/* Style des lignes du tableau */
+.account-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Style des cellules du tableau */
+.account-table td, .account-table th {
+  padding: 10px;
+  border: 1px solid #ddd;
+  /* Empêcher le retour à la ligne */
+}
+.account-table td{
+	width:100px;
+}
+/* Style des boutons Bannir et Débannir */
+.ban-button, .unban-button {
+  background-color: #dc3545; /* Couleur rouge */
+  color: #fff; /* Texte blanc */
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+/* Style des boutons Bannir et Débannir au survol */
+.ban-button:hover, .unban-button:hover {
+  background-color: #c82333; /* Couleur rouge foncé au survol */
+}
+/*******************************************************************************/
+/* Style de base pour la barre de navigation */
+.sidebar {
+	width: 200px; /* Largeur de la barre de navigation */
+	height: 100%; /* Hauteur de la barre de navigation (100% de la hauteur de la fenêtre) */
+	background-color: #333; /* Couleur de fond de la barre de navigation */
+	color: #fff; /* Couleur du texte de la barre de navigation */
+	position:fixed;
+	z-index: 1; /* Assurer que la barre de navigation reste au-dessus du contenu principal */
+}
+.sidebar h4{
+	padding: 10px; /* Espacement interne */
+	margin-top: 0px;
+	margin-bottom: 0px;
+	color: #fff; /* Couleur du texte */
+	background-color: #333; /* Couleur de fond */
+	text-align: right; /* Alignement du texte au centre */
+}
+.sidebar h6
+{
+	margin-bottom: 20px; /* Marge inférieure */
+	padding: 0px 10px 0px 10px; /* Espacement interne */
+	/* Marge inférieure */
+	background-color: #333; /* Couleur de fond */
+	text-align: right; /* Alignement du texte au centre */
+}
+.sidebar h6 a
+{
+	  color: #fff; /* Couleur du texte */
+}
+.sidebar h6 a:hover
+{
+	  color: #555; /* Couleur du texte */
+}
+
+/* Style de la liste des onglets */
+.nav-links {
+  list-style: none; /* Supprimer les puces de la liste */
+  padding: 0; /* Supprimer les marges internes de la liste */
+}
+
+/* Style des liens des onglets */
+.nav-links li {
+  padding: 10px; /* Espacement entre chaque onglet */
+  text-align: right; /* Aligner le texte à droite */
+}
+
+.nav-links li a {
+  color: #fff; /* Couleur du texte des liens */
+  text-decoration: none; /* Supprimer les soulignements des liens */
+  display: block; /* Afficher les liens en bloc */
+}
+
+/* Style au survol des liens des onglets */
+.nav-links li:hover {
+  background-color: #555; /* Couleur de fond au survol */
+}
+/*******************************************************************************/
+
+
+/******** ICI CA CHANGE ****/
+
+.search-container {
+    margin-bottom: 20px; /* Espacement inférieur */
+    padding: 10px; /* Espacement interne */
+    background-color: #eeeeee; /* Couleur de fond */
+}
+
+/* Style de la barre de recherche */
+.search-bar {
+	 margin-bottom: 15px; /* Espacement inférieur */
+    width: calc(50% - 5px); /* Largeur de chaque barre de recherche (moitié de la largeur moins un espacement) */
+    padding: 8px; /* Espacement interne */
+    margin-right: 5px; /* Espacement droit entre les champs de recherche */
+    border: none; /* Suppression de la bordure */
+    border-radius: 5px; /* Bordure arrondie */
+    display: inline-block; /* Affichage en ligne pour aligner les éléments côte à côte */
+}
+/* Style du bouton de recherche */
+.search-button {
+	
+	margin-top:10px;
+    padding: 8px 16px; /* Espacement interne */
+    border: none; /* Suppression de la bordure */
+    background-color: #333; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border-radius: 5px; /* Bordure arrondie */
+    cursor: pointer; /* Curseur pointer */
+}
+
+/* Style du bouton de recherche au survol */
+.search-button:hover {
+    background-color: #555; /* Couleur de fond au survol */
+}
+
+
+.new-category-button {
+    padding: 10px 20px;
+    background-color: #007bff; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border: none; /* Supprimer la bordure */
+    border-radius: 5px; /* Bordure arrondie */
+    cursor: pointer; /* Curseur pointeur */
+}
+
+.new-category-button:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+}
+
+/**********************************************************/
+/** LA  **/
+
+.category-select {
+  padding: 8px; /* Espacement interne */
+  border: 1px solid #ddd; /* Bordure grise */
+  border-radius: 5px; /* Bordure arrondie */
+  box-sizing: border-box; /* Inclure les bordures et les rembourrages dans la largeur */
+  width: 100%; /* Largeur du sélecteur */
+  font-size: 13px; /* Taille de la police */
+  color: #333; /* Couleur du texte */
+  background-color: #fff; /* Couleur de fond */
+}
+
+/* Style de l'option "Sélectionner une catégorie" */
+.category-select option[disabled][selected] {
+  display: none; /* Masquer l'option "Sélectionner une catégorie" */
+}
+
+.formulaire-section-add{
+	position:fixed;
+	z-index:3;
+	width:100%;
+	height:100%;
+	background-color:rgba(0,0,0,0.8)
+}
+.new-category-section {
+    margin-top: 20px; /* Marge supérieure */
+    padding: 20px; /* Espacement interne */
+    background-color: #f4f4f4; /* Couleur de fond */
+    border-radius: 5px; /* Bordure arrondie */
+}
+.category-section {
+	margin:auto;
+	width:500px;
+    margin-top: 20px; /* Marge supérieure */
+    padding: 20px; /* Espacement interne */
+    background-color: #f4f4f4; /* Couleur de fond */
+    border-radius: 5px; /* Bordure arrondie */
+}
+
+.category-section h2 {
+    margin-bottom: 10px; /* Marge inférieure pour le titre */
+}
+
+.category-section label {
+    font-weight: bold; /* Texte en gras pour les libellés */
+    margin-bottom: 5px; /* Marge inférieure pour les libellés */
+}
+
+.category-section input[type="text"],
+.category-section textarea {
+    width: 100%; /* Largeur de 100% pour les champs de texte */
+    padding: 8px; /* Espacement interne */
+    margin-bottom: 10px; /* Marge inférieure */
+    border: 1px solid #ddd; /* Bordure grise */
+    border-radius: 5px; /* Bordure arrondie */
+    box-sizing: border-box; /* Inclure les bordures et les rembourrages dans la largeur */
+}
+
+.category-section input[type="submit"] {
+    background-color: #007bff; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border: none; /* Supprimer la bordure */
+    padding: 10px 20px; /* Espacement interne */
+    border-radius: 5px; /* Bordure arrondie */
+    cursor: pointer; /* Curseur pointeur */
+}
+
+.category-section input[type="submit"]:hover {
+    background-color: #0056b3; /* Couleur de fond au survol */
+}
+
+.close-button {
+    background-color: #333; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border: none; /* Supprimer la bordure */
+    padding: 8px 16px; /* Espacement interne */
+    border-radius: 5px; /* Bordure arrondie */
+    cursor: pointer; /* Curseur pointer */
+}
+
+.close-button:hover {
+    background-color: #555; /* Couleur de fond au survol */
+}
