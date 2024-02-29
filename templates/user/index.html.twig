@@ -1,82 +1,41 @@
-{% extends 'base.html.twig' %}
-{% block stylesheets %}
-{{ parent() }}
-    <link rel="stylesheet" href="{{ asset('asset/css/styleProfil.css') }}">
-
-{% endblock %}
-
 {% block body %}
-    <h2>Informations Personnelles</h2>
-    <section class="profile">
-        <div class="container">
-            <div class="profile-info">
-                <div class="info-item">
-                    <span class="label">Nom:</span>
-                    <span class="value">{{ user.nomUse }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="label">Prénom:</span>
-                    <span class="value">{{ user.prenomUse }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="label">Email:</span>
-                    <span class="value">{{ user.email }}</span>
-                </div>
-                <div class="info-item">
-                    <span class="label">Nombre de commandes :</span>
-                    <span class="value">{{ nombreCommande }}</span>
-                </div>
-            </div>
-            <ul class="profile-links">
-                <li><a href="#" class="sommaire-profil">Adresses de Livraison</a></li>
-                <li><a href="#" class="sommaire-profil">Adresses de Facturation</a></li>
-                <li><a href="#" class="sommaire-profil">Méthodes de Paiement</a></li>
-                <li><a href="#" class="sommaire-profil">Commandes</a></li>
-            </ul>
-        </div>
-    </section>
+<link rel="stylesheet" href="{{ asset('asset/css/styleGstListProduit.css') }}">
 
-    <section class="shipping-address">
-        <div class="container">
-            <h2>Choisir une Adresse de Livraison</h2>
+<nav class="sidebar">
+		<h6><a href="#">RETOUR VERS ECO-SERVICE</a></h6>
+		<h4>Sommaire Gestion d'Application</h4>
+		
+		<ul class="nav-links">
+			<li><a href="{{ path('app_adresse_index') }}" >Adresse</a></li>
+            <li><a href="{{ path('app_cat_produit_index') }}" >Catégorie Produit</a></li>
+            <li><a href="{{ path('app_commenter_index') }}">Commentaire</a></li>
+            <li><a href="{{ path('app_produit_index') }}">Produit</a></li>
+            <li><a href="{{ path('app_diy_index') }}">DIY</a></li>
+            <li><a href="{{ path('app_user_index') }}">Utilisateur</a></li>
+		</ul>
+	</nav>
+    <section class="admin-section">
+		<h2>Gestion des Comptes</h2>
+		<table class="account-table">
+			<thead>
+				<tr>
+					<th>email</th>
+                    <th>nom</th>
+                    <th>prénom</th>
+                    <th>Supprimer</th>
+				</tr>
+			</thead>
+			<tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.email}}</td>
+                <td>{{ user.nomUse }}</td>
+                <td>{{ user.prenomUse }}</td>
+                <td> {{ include('user/_delete_form.html.twig') }}</td>
+            </tr>
+        {% endfor %}
+			</tbody>
+		</table>
+	</section>
 
-            {% if adresses is not empty %}
-                {% for adresse in adresses %}
-                    <div class="address-list">
-                        <label for="address1">{{ adresse.RueAdr }} {{ adresse.ComplementAdr }}, {{ adresse.CpAdr }} {{ adresse.villeAdr }}, {{ adresse.pays.getNomPay }}</label>
-                        <a href="{{ path('app_adresse_edit', {'id': adresse.id}) }}"><button class="btn">Modifier l'adresse</button></a>
-                        {{ include('user/_delete_form.html.twig') }}
-                    </div>
-                {% endfor %}
-            {% else %}
-                <p>Aucune adresse</p>
-            {% endif %}
-            <a href="{{ path('app_adresse_new') }}"><button class="btn">Ajouter une Nouvelle Adresse</button></a>
-
-            </div>
-        </div>
-    </section>
-
-
-
-    <section class="orders">
-        <div class="container">
-            <h2>Mes Commandes</h2>
-            <div class="order">
-                <div class="order-details">
-                    <p><strong>Numéro de Commande:</strong> 123456</p>
-                    <p><strong>Date de Commande:</strong> 2024-02-24</p>
-                    <p><strong>Prix Total:</strong> $99.99</p>
-                    <p><strong>Statut:</strong> En Attente</p>
-                    <p><strong>Suivi:</strong> 1234567890</p>
-                    <p><strong>Facture:</strong> <a href="#">Télécharger</a></p>
-                    <!-- Ajoutez plus de détails sur la commande ici -->
-                </div>
-                <div class="mesItemsOrdered">
-
-                </div>
-            </div>
-
-        </div>
-    </section>
 {% endblock %}
