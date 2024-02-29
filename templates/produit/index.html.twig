@@ -1,45 +1,76 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Produit index{% endblock %}
-
 {% block body %}
-    <h1>Produit index</h1>
+<link rel="stylesheet" href="{{ asset('asset/css/styleGstListProduit.css') }}">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom_pro</th>
-                <th>Prix_pro</th>
-                <th>Quantite_pro</th>
-                <th>Img_pro</th>
-                <th>Description_pro</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for produit in produits %}
-            <tr>
-                <td>{{ produit.id }}</td>
-                <td>{{ produit.nomPro }}</td>
-                <td>{{ produit.prixPro }}</td>
-                <td>{{ produit.quantitePro }}</td>
-                <td>{{ produit.descriptionPro }}</td>
-                <img src="{{asset('uploads/images/' ~ produit.imgPro)}}">
+<nav class="sidebar">
+		<h6><a href="{{ path('app_default') }}">RETOUR VERS ECO-SERVICE</a></h6>
+		<h4>Sommaire Gestion d'Application</h4>
+		
+		<ul class="nav-links">
+			<li><a href="{{ path('app_adresse_index') }}" >Adresse</a></li>
+            <li><a href="{{ path('app_cat_produit_index') }}" >Catégorie Produit</a></li>
+            <li><a href="{{ path('app_commenter_index') }}">Commentaire</a></li>
+            <li><a href="{{ path('app_produit_index') }}">Produit</a></li>
+            <li><a href="{{ path('app_diy_index') }}">DIY</a></li>
+            <li><a href="{{ path('app_user_index') }}">Utilisateur</a></li>
 
 
-                <td>
-                    <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
-                    <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-    <a href="{{ path('app_produit_new') }}">Create new</a>
+		</ul>
+	</nav>
+    <section class="admin-section">
+		<h2>Gestion des Produits</h2>
+		
+		<div class="search-container">
+			<select class="category-select">
+				<option disabled selected>Sélectionner une catégorie</option>
+				<!-- Options de catégories seront ajoutées ici dynamiquement -->
+				<option value="categorie1">Catégorie 1</option>
+				<option value="categorie2">Catégorie 2</option>
+				<option value="categorie3">Catégorie 3</option>
+				<!-- Ajoutez plus d'options de catégories ici -->
+			</select>
+            <button type="submit" class="search-button">Rechercher</button>
+		</div>
+		
+		
+		<div class="new-category-section">
+		</div>
+
+		
+		<table class="account-table">
+			<thead>
+				<tr>
+			        <th>Id</th>
+                    <th>Nom_pro</th>
+                    <th>Prix_pro</th>
+                    <th>Quantite_pro</th>
+                    <th>Description_pro</th>
+                    <th>Modifier</th>
+                    <th>Supprimer</th>
+                    <th>Voir</th>
+                    
+				</tr>
+			</thead>
+			<tbody>
+            {% for produit in produits %}
+				<tr>
+				    <td>{{ produit.id }}</td>
+                    <td>{{ produit.nomPro }}</td>
+                    <td>{{ produit.prixPro }}</td>
+                    <td>{{ produit.quantitePro }}</td>
+                    <td>{{ produit.descriptionPro }}</td>
+                    <td><a class="ban-button" href="{{ path('app_produit_edit', {'id': produit.id}) }}">modifier</a></td>
+                    <td> {{ include('produit/_delete_form.html.twig') }}</td>
+                    <td><a class="ban-button" href="{{ path('app_produit_show', {'id': produit.id}) }}">voir</a></td>
+                </tr>
+			{% endfor %}
+		</tbody>
+	</table>
+		<div class="new-category-section">
+        <a class="new-category-button" href="{{ path('app_produit_new') }}">Nouveau Produit</a>
+		</div>
+	</section>
+  
+
+    
 {% endblock %}
