@@ -11,20 +11,20 @@
         <div class="container">
             <h2>Bienvenue sur notre site e-commerce</h2>
             <p>Découvrez notre large sélection de produits de qualité.</p>
-            <a href="#" class="btn">Découvrir notre catalogue</a>
+            <a href="{{ path('app_list_produit') }}" class="btn">Découvrir notre catalogue</a>
         </div>
     </section>
     <section class="products">
-        <h2>Nos Produits</h2>
+
         <div class="containerProduit">
 
             {% for produit in  produits %}
                 <a href="{{ path('app_produit_show', {'id': produit.id}) }}" class="linkProduit product">
-                    <div >
+                    <div>
                         <img src="{{ asset('uploads/images/' ~ produit.imgPro) }}" alt="{{ produit.nomPro }}" class="imgProduit">
 
                         <h3>{{ produit.nomPro }}</h3>
-                        <p>{{ produit.descriptionPro }}</p>
+                        <p class="descProduit">{{ produit.descriptionPro }}</p>
                         <span class="price">{{ produit.prixPro }}€</span>
                     </div>
                 </a>

@@ -1,53 +1,6 @@
-html{
-    margin: 0;
-    padding: 0;
-  }
-.displayflex 
-{
-    display :flex;
+body{
+  background: white;
 }
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    color: #333;
-  }
-  header h1 {
-    margin: 0;
-    padding: 0;
-  }
-  .headertop
-  {
-    display:flex;
-    justify-content: space-between;
-    width: 80%;
-    margin: auto;
-    background-color: white;
-  }
-  .headerbottom
-  {
-    background: #333;
-  }
-  nav ul li {
-    display: inline;
-    margin-left: 20px;
-    font-weight: bold;
-  }
-  nav ul{
-    margin-bottom:0px;
-    margin-top:0px;
-  }
-  .headertop nav ul li a {
-    color: #333;
-    text-decoration: none;
-  }
-  .headerbottom nav ul li a {
-    color: white;
-    text-decoration: none;
-  }
   .container {
 
     margin: auto;
@@ -174,3 +127,25 @@ html{
   .add-filter:hover {
     background-color: #218838; /* Couleur verte plus foncée au survol */
   }
+
+
+
+.custom-autocomplete{
+  background-color: white;
+  width: 280px;
+  border-radius: 10px;
+  padding: 10px;
+  list-style: none ;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index:300;
+}
+.ui-menu-item{
+  padding: 5px;
+  border-radius: 5px;
+}
+.ui-menu-item:hover {
+  background-color: #ccc;
+}
+.ui-helper-hidden-accessible{
+  display: none;
+}
