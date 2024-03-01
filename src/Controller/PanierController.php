@@ -168,7 +168,7 @@ class PanierController extends AbstractController
     #[Route('/', name: 'app_panier', methods: ['GET'])]
     public function panier(ProduitRepository $produitRepository): Response
     {
-        $produits = $produitRepository->findAll();
+        $produits = $produitRepository->findBy([], null, 10);
         return $this->render('panier/index.html.twig', [
             'produits'=> $produits,
         ]);

@@ -4,8 +4,10 @@ namespace App\Controller;
  
 use App\Entity\Produit;
 use App\Repository\ComposerRepository;
+use App\Repository\EtatRepository;
 use App\Repository\PanierRepository;
 use App\Repository\ProduitRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,14 +53,18 @@ class StripeController extends AbstractController
  
  
     #[Route('/stripe/create-charge', name: 'app_stripe_charge', methods: ['POST'])]
-    public function createCharge(Request $request, Security $security, ComposerRepository  $composersRepository,PanierRepository $panierRepository)
+    public function createCharge(EntityManagerInterface $entityManager,EtatRepository $etatRepository,Request $request, Security $security, ComposerRepository  $composersRepository,PanierRepository $panierRepository)
     {
         $user = $security->getUser();
 
         $panierUserEnCours = $panierRepository->findOneBy(
             ['user' => $user->getId(), 'etat' => '1'],
         );
-        
+        $etatFini=$etatRepository->findOneById(2);
+        $panierUserEnCours->setIdEta($etatFini);
+
+        $entityManager->persist($panierUserEnCours);
+        $entityManager->flush();
         $composers = $panierUserEnCours->getComposers();
             $composers->initialize();
             $composers->toArray();
@@ -80,7 +86,7 @@ class StripeController extends AbstractController
             'success',
             'Payment Successful!'
         );
-        return $this->redirectToRoute('app_stripe', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_default', [], Response::HTTP_SEE_OTHER);
     }
 
     
