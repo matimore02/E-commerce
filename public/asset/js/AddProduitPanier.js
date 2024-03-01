@@ -1,5 +1,5 @@
 function addToPanier(idProduit) {
-    let apiUrl = "http://localhost:8000/panier/api/getproduit/" + idProduit;
+    let apiUrl = "http://localhost:8000/panier/api/getprod/" + idProduit;
 
     fetch(apiUrl)
         .then(response => {

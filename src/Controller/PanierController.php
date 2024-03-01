@@ -21,6 +21,28 @@ use Exception;
 #[Route('/panier')]
 class PanierController extends AbstractController
 {
+
+
+    #[Route('/api/getprod/{id}', name: 'app_api_getprod', methods: ['GET'])]
+    public function getProduit($id,ProduitRepository $produitRepository): Response
+    {
+
+        $produit = $produitRepository->find($id);
+
+        if (!$produit) {
+
+            return new JsonResponse(['message' => 'Produit non trouvé'], Response::HTTP_NOT_FOUND);
+        }
+
+        $data= [
+            'nom_produit' => $produit->getNomPro(),
+            'prix_produit' => $produit->getPrixPro(),
+            'image_produit' => $produit->getImgPro(),
+            'description_produit' => $produit->getDescriptionPro(),
+            'id_produit' => $produit->getId(),
+        ];
+        return new JsonResponse($data, Response::HTTP_OK);
+    }
     #[Route('/api/byuser', name: 'app_api_getpanier')]
     public function index(Security $security, ComposerRepository  $composersRepository,PanierRepository $panierRepository): Response
     {
@@ -146,25 +168,7 @@ class PanierController extends AbstractController
         return new JsonResponse(['success' => true, 'message' => 'La quantité du produit a été mise à jour avec succès'], 200);
     }
 
-    #[Route('/api/getproduit/{id}', name: 'app_api_getproduitbyid', methods: ['GET'])]
-    public function getProduitByid($id,ProduitRepository $produitRepository): Response
-    {
-        $produit = $produitRepository->find($id);
 
-        if (!$produit) {
-        
-            return new JsonResponse(['message' => 'Produit non trouvé'], Response::HTTP_NOT_FOUND);
-        }
-
-        $data= [
-            'nom_produit' => $produit->getNomPro(),
-            'prix_produit' => $produit->getPrixPro(),
-            'image_produit' => $produit->getImgPro(),
-            'description_produit' => $produit->getDescriptionPro(),
-            'id_produit' => $produit->getId(),
-        ];
-        return new JsonResponse($data, Response::HTTP_OK);
-    }
     #[Route('/', name: 'app_panier', methods: ['GET'])]
     public function panier(ProduitRepository $produitRepository): Response
     {
