@@ -15,6 +15,29 @@
 
 
 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom_pro</th>
+                <th>Prix_pro</th>
+                <th>Quantite_pro</th>
+                <th>Img_pro</th>
+                <th>Description_pro</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for produit in produits %}
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.nomPro }}</td>
+                <td>{{ produit.prixPro }}</td>
+                <td>{{ produit.quantitePro }}</td>
+                <td>{{ produit.descriptionPro }}</td>
+             
+
+
 		</ul>
 	</nav>
     <section class="admin-section">
