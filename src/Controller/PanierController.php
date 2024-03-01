@@ -95,9 +95,10 @@ class PanierController extends AbstractController
                 $entityManager->flush();
 
                 $panierUserEnCours = $panierRepository->findOneBy([
-                    'idUse' => $user, // Recherche par utilisateur
-                    'idEta' => $etatRepository->findOneById(1) // Recherche par état (1 dans ce cas)
+                    'user' => $user, // Recherche par utilisateur
+                    'etat' => $etatRepository->findOneById(1) // Recherche par état (1 dans ce cas)
                 ]);
+                dd($panierUserEnCours);
             }
 
             $produit = $entityManager->getRepository(Produit::class)->find($data->produit);
