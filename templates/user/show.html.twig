@@ -8,6 +8,9 @@
 {% block body %}
     <h2>Informations Personnelles</h2>
     <section class="profile">
+        {% if app.user.admin == 1 %}
+            <li><a href="{{ path("app_panel") }}">Panel</a></li>
+        {% endif %}
         <div class="container">
             <div class="profile-info">
                 <div class="info-item">

@@ -60,6 +60,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commenter::class, orphanRemoval: true)]
     private Collection $commenters;
 
+    #[ORM\Column]
+    private ?int $admin = null;
+
     public function __construct()
     {
         $this->paniers = new ArrayCollection();
@@ -337,6 +340,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $commenter->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdmin(): ?int
+    {
+        return $this->admin;
+    }
+
+    public function setAdmin(int $admin): static
+    {
+        $this->admin = $admin;
 
         return $this;
     }

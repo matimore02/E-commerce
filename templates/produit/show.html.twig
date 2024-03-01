@@ -1,7 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Produit{% endblock %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('asset/css/styleFicheProduit.css') }}">
+    {{ ux_controller_link_tags() }}
+{% endblock %}
 {% block body %}
     {% block javascripts %}
 
@@ -96,36 +100,27 @@
 
 
     {% endblock %}
-    <h1>Produit</h1>
+    <section class="product-details-section">
+        <h2>Détails du Produit</h2>
+        <div class="container-product">
+            <img src="/uploads/images/{{ produit.imgPro }}" alt="{{ produit.nomPro }}" class="product-image">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ produit.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom_pro</th>
-                <td>{{ produit.nomPro }}</td>
-            </tr>
-            <tr>
-                <th>Prix_pro</th>
-                <td>{{ produit.prixPro }}</td>
-            </tr>
-            <tr>
-                <th>Quantite_pro</th>
-                <td>{{ produit.quantitePro }}</td>
-            </tr>
-            <tr>
-                <th>Img_pro</th>
-                <td>{{ produit.imgPro }}</td>
-            </tr>
-            <tr>
-                <th>Description_pro</th>
-                <td>{{ produit.descriptionPro }}</td>
-            </tr>
-        </tbody>
-    </table>
+            <div class="product-details">
+                <!-- Ajout de l'image du produit -->
+                <h3>Nom du Produit: <span class="product-name">{{ produit.nomPro }}</span></h3>
+                <p>Description du Produit: <span class="product-description">{{ produit.descriptionPro}}.</span></p>
+                <span class="price">Prix: <span class="product-price">{{ produit.prixPro }}</span></span>
+                <p>Stock: <span class="product-stock">{{ produit.quantitePro }}</span> </p>
+
+                <p>Catégorie: <span class="product-category">{{produit.getCat().getLibelle()}}</span></p>
+
+                <input type="number" id="quantite">
+                <button class="add-to-cart-button" id="{{ produit.id }}" onclick="addToPanier({{ produit.id }})">Ajouter au panier</button>
+
+            </div>
+        </div>
+    </section>
+
 
     <span id="noteProduit"> #</span>
     <p>Nombre d'avis : <span id="nombreNote"></span></p>
@@ -138,26 +133,34 @@
     </select>
     <br>
 
-
-    <input type="number" id="quantite">
-    <button id="{{ produit.id }}" onclick="addToPanier({{ produit.id }})">Ajouter au panier</button>
-
-{{ form_start(form, {'attr': {'class': 'd-flex align-items-center justify-content-start'}}) }}
+    <section class="comments-section">
+        <h2>Commentaires et Notation</h2>
+        <div class="container">
+            {{ form_start(form, {'attr': {'class': 'new-comment-form'}}) }}
             {{ include('produit/_formCom.html.twig') }}
-{{ form_end(form) }}
+            {{ form_end(form) }}
+
+            <div class="comments">
+                {% if commentaires is not empty %}
+                    {% for commentaire in commentaires %}
+                        <ul class="commentaireContainer">
+                            <div class="comment">
+                                <span class="comment-text">{{ commentaire.commentaire }}</span><br>
+                                <span>Par : {{ commentaire.getUser.getNomUse }}</span>
+                            </div>
+
+                        </ul>
+                    {% endfor %}
+                {% else %}
+                    <p>Aucun commentaire pour cette publication.</p>
+                {% endif %}
+
+        </div>
+    </section>
 
 
-{% if commentaires is not empty %}
-            {% for commentaire in commentaires %}
-                <ul class="commentaireContainer">
 
-                        <li>{{ commentaire.commentaire }}</li>
-                        
 
-                </ul>
-            {% endfor %}
-        {% else %}
-            <p>Aucun commentaire pour cette publication.</p>
-        {% endif %}
+
 
 {% endblock %}

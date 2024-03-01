@@ -18,8 +18,13 @@ class Commenter1Type extends AbstractType
         $builder
             ->add('commentaire', TextareaType::class, [
                 'label' => 'Commentaire',
+                'attr' => [
+                    'class' => 'votre-classe-titre comment-textarea', // Ajouter les classes désirées
+                    'placeholder' => 'Ajouter un nouveau commentaire...', // Ajouter un placeholder
+                ],
             ]);
-            
+
+
         // Ne pas ajouter le champ de user ici
     }
 

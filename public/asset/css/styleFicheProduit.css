@@ -1,0 +1,137 @@
+body{
+    background-color: white;
+}
+section
+{
+    width:90%;
+    margin:auto;
+    border-top:1px solid rgba(1,1,1,0.2)
+}
+.product-details-section {
+    margin-top: 50px;
+}
+
+.container-product {
+    display: flex;
+}
+
+.product-image {
+    width: 300px; /* Largeur de l'image */
+    margin-right: 20px;
+}
+
+.product-details {
+    width: 50%; /* Largeur des détails du produit */
+}
+
+.product-name {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.product-description {
+    font-size: 16px;
+    color: #555;
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.product-stock {
+    font-size: 16px;
+}
+
+.product-category,
+.product-weight,
+.product-dimensions {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.add-to-cart-button {
+    background-color: #007bff; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur du texte */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.add-to-cart-button:hover {
+    background-color: #0056b3; /* Couleur de fond du bouton au survol */
+}
+
+
+.comments-section {
+    margin-top: 20px;
+}
+
+.new-comment-form {
+    margin-bottom: 20px;
+}
+
+.comment-textarea,.votre-classe-titre {
+    min-width: 300px;
+    max-width: 300px;
+    min-height: 100px;
+    max-height: 100px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.rating-input {
+    margin-bottom: 10px;
+}
+
+.rating-input label {
+    display: block;
+}
+
+.rating-input input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.submit-comment-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-comment-button:hover {
+    background-color: #555;
+}
+
+.comments {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
+
+.comment p,
+.comment .rating {
+    margin-bottom: 5px;
+}
+
+.comment .comment-text {
+    font-style: italic;
+}
+
+.comment .stars {
+    color: gold;
+}

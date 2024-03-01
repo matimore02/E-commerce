@@ -34,10 +34,9 @@ class UserController extends AbstractController
     public function show(Security $security,UserRepository $userRepository,PanierRepository $panierRepository): Response
     {
         $user = $userRepository->find($security->getUser()) ;
+
         if(!$user){
-            return $this->render('default/index.html.twig', [
-                'controller_name' => 'DefaultController',
-            ]);
+            return $this->redirectToRoute('app_default');
         }
 
         $nombreCommande = $panierRepository->createQueryBuilder('p')
@@ -51,7 +50,7 @@ class UserController extends AbstractController
 
 
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/show.html.twig', [
             'user' => $user,
             'nombreCommande' => $nombreCommande,
             'adresses' => $user->getAdresses(),
