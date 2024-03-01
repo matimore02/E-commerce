@@ -1,0 +1,131 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('asset/css/StyleListeProduit.css') }}">
+    {{ ux_controller_link_tags() }}
+{% endblock %}
+
+{% block body %}
+
+    <section class="search-section">
+        <div class="container">
+            <div class="container">
+                <input type="text" placeholder="Rechercher un produit..." id="search_input" class="search-bar"/>
+            </div>
+            <div class="filter-section">
+                {% for catP in catPs %}
+                    <div class="filter">
+                        <span id="{{ catP.id }}" onclick="getProduitByCat({{ catP.id }})">{{catP.libelle}}</span>
+                    </div>
+
+                {% endfor %}
+            </div>
+            <div class="price-filter">
+                <input type="number" placeholder="Prix MAX" class="search-bar" id="priceRangeMax" min="0"/>
+                <input type="number" placeholder="Prix MIN" class="search-bar" id="priceRangeMin" min="0"/>
+            </div>
+        </div>
+    </section>
+
+    <section class="results-section">
+        <div class="container" id="container">
+            <h2>Résultats de la Recherche</h2>
+
+        </div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script>
+        function getProduit(idCat){
+
+            //let min = document.getElementById("priceRangeMin").value
+            //if (min === ''){
+            //    min=null;
+            //}
+
+            let max = document.getElementById("priceRangeMax").value
+            if (max === ''){
+                max=null;
+            }
+
+            let currentUrl = window.location.origin + "/panier/api/getproduit/" + idCat + "/" + max + "/" + null;
+
+            // Faire une requête AJAX pour récupérer les produits
+            fetch(currentUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Sélectionner le conteneur où vous souhaitez insérer les produits
+                    let container = document.getElementById('container');
+                    container.innerHTML = " "
+                    // Parcourir les données des produits et les insérer dans le conteneur
+                    data.forEach(produit => {
+                        // Créer les éléments HTML pour chaque produit
+                        let produitDiv = document.createElement('div');
+                        produitDiv.classList.add('linkProduit', 'product');
+                        produitDiv.innerHTML = `
+                               <a href="/produit/${produit.id_prod}" class="linkProduit product">
+                                 <div>
+                                   <img src="/uploads/images/${produit.image_produit}" alt="${produit.nom_produit}" class="imgProduit">
+                                   <h3>${produit.nom_produit}</h3>
+                                   <p class="descProduit">${produit.description}</p>
+                                   <span class="price">${produit.prix_produit}€</span>
+                                 </div>
+                               </a>
+                             `;
+
+                        // Ajouter le produit au conteneur
+                        container.appendChild(produitDiv);
+                    });
+                })
+                .catch(error => console.error('Erreur lors de la requête fetch:', error));
+        }
+        const priceRangeMaxInput = document.getElementById('priceRangeMax');
+        const priceRangeMinInput = document.getElementById('priceRangeMin');
+
+        // Ajouter un écouteur d'événements pour détecter les changements de valeur
+        priceRangeMaxInput.addEventListener('input', handleInputChange);
+        priceRangeMinInput.addEventListener('input', handleInputChange);
+        function handleInputChange(event) {
+            getProduit()
+        }
+        getProduit(null)
+        function getProduitByCat(idCat){
+            getProduit(idCat)
+        }
+
+
+
+
+        $(document).ready(function () {
+            $('#search_input').autocomplete({
+                source: function (request, response) {
+                    // Vérifiez si request.term est défini avant d'appeler toLowerCase()
+                    let term = request.term ? request.term.toLowerCase() : '';
+
+                    $.getJSON(window.location.origin + "/panier/api/autocomplete/" + term, function (data) {
+                        let formattedData = $.map(data, function (item) {
+                            console.log(item.id)
+                            return {
+                                label: item.nom_produit,
+                                value: item.id
+                            };
+                        });
+                        response(formattedData);
+                    });
+                },
+                minLength: 1,
+                autoFocus: false,
+                classes: {
+                    'ui-autocomplete': 'custom-autocomplete'
+                },
+                select: function (event, ui) {
+                    event.preventDefault();
+                    let selectedValue = ui.item.value;
+                    let baseUrl = window.location.origin + "/produit/" + selectedValue;
+                    window.location.href = baseUrl;
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

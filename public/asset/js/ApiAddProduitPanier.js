@@ -97,7 +97,6 @@ function getPanierByUser() {
                 }
 
                 selectQuantite.value = produit.quantite;
-
                 cartItem.appendChild(selectQuantite);
 
 

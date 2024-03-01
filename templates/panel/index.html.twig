@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PanelController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1> Panel config</h1>
+        <ul>
+            <nav>
+                <ul>
+                    <br><li><a href="{{ path('app_adresse_index') }}" >Adresse</a></li></br>
+                    <br><li><a href="{{ path('app_cat_produit_index') }}" >Catégorie Produit</a></li></br>
+                    <br><li><a href="{{ path('app_commenter_index') }}">Commentaire</a></li></br>
+                    <br><li><a href="{{ path('app_produit_index') }}">Produit</a></li></br>
+                    <br><li><a href="{{ path('app_diy_index') }}">DIY</a></li></br>
+                    <br><li><a href="#"></a>User</li></br>
+                </ul>
+            </nav>
+        </ul>
+</div>
+{% endblock %}

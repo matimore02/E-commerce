@@ -1,10 +1,22 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}New CatProduit{% endblock %}
-
 {% block body %}
-    <h1>Create new CatProduit</h1>
+<link rel="stylesheet" href="{{ asset('asset/css/styleGstCategorie.css') }}">
 
+  <nav class="sidebar">
+		<h6><a href="{{ path('app_default') }}">RETOUR VERS ECO-SERVICE</a></h6>
+		<h4>Sommaire Gestion d'Application</h4>
+		
+		<ul class="nav-links">
+			<li><a href="{{ path('app_adresse_index') }}" >Adresse</a></li>
+            <li><a href="{{ path('app_cat_produit_index') }}" >Catégorie Produit</a></li>
+            <li><a href="{{ path('app_commenter_index') }}">Commentaire</a></li>
+            <li><a href="{{ path('app_produit_index') }}">Produit</a></li>
+            <li><a href="{{ path('app_diy_index') }}">DIY</a></li>
+            <li><a href="{{ path('app_user_index') }}">Utilisateur</a></li>
+
+
+
+		</ul>
+	</nav>
     {{ include('cat_produit/_form.html.twig') }}
 
     <a href="{{ path('app_cat_produit_index') }}">back to list</a>
