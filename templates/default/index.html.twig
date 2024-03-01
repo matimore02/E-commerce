@@ -23,8 +23,8 @@
                     <div>
                         <img src="{{ asset('uploads/images/' ~ produit.imgPro) }}" alt="{{ produit.nomPro }}" class="imgProduit">
 
-                        <h3>{{ produit.nomPro }}</h3>
-                        <p class="descProduit">{{ produit.descriptionPro }}</p>
+                        <h3>{{ produit.nomPro|slice(0, 30) ~ (produit.descriptionPro|length > 30 ? '...' : '') }}</h3>
+                        <p class="descProduit">{{ produit.descriptionPro|slice(0, 40) ~ (produit.descriptionPro|length > 40 ? '...' : '') }}</p>
                         <span class="price">{{ produit.prixPro }}€</span>
                     </div>
                 </a>
