@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class RegistrationFormType extends AbstractType
 {
@@ -23,7 +24,12 @@ class RegistrationFormType extends AbstractType
             ->add('nom_use')
             ->add('prenom_use')
             ->add('telephone_use')
-            ->add('date_naissance_use')
+            ->add('date_naissance_use', DateType::class, [
+                'widget' => 'single_text',
+                'html5' => true, // Utiliser le type de champ "date" natif HTML5
+                'years' => range(date('Y') - 100, 2024), // Limitez les années
+                'attr' => ['max' => '2024-12-31'] // Limite la date maximale à 2024-12-31
+            ])
 
             ->add('agreeTerms', CheckboxType::class, [
                                 'mapped' => false,
@@ -34,8 +40,7 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
-                                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [

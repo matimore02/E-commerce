@@ -64,7 +64,7 @@ class PanierController extends AbstractController
                 ['user' => $user->getId(), 'etat' => '1'],
             );
 
-            dd($panierUserEnCours->getComposers()->get);
+
             if (!$panierUserEnCours){
                 $panier = New Panier();
                 $panier->setIdUse($user);
@@ -174,4 +174,112 @@ class PanierController extends AbstractController
         ]);
     }
 
+    #[Route('/api/getproduit/{id_cat}/{max}/{min}', name: 'app_api_getproduitbyid', methods: ['GET'])]
+    public function getProduitByCondition($id_cat,$max,$min,ProduitRepository $produitRepository): Response
+    {
+
+        $max = (float)$max  ? (float)$max : null;
+        $min = (float)$min  ? (float)$min : null;
+        $id_cat = (float)$id_cat  ? (float)$id_cat : null;
+
+        if ($max === null && $min === null && $id_cat === null) {
+            // Récupérer les 20 premiers produits si toutes les conditions sont nulles
+            $produits = $produitRepository->findBy([], null, 20);
+        } elseif ($max !== null && $min === null && $id_cat === null) {
+            // Récupérer les produits dont le prix est inférieur ou égal à $max
+            $produits = $produitRepository->createQueryBuilder('p')
+                ->andWhere('p.prix_pro < :max')
+                ->setParameter('max', $max)
+                ->getQuery()
+                ->getResult();
+
+
+        } elseif ($max === null && $min !== null && $id_cat === null) {
+            $query = $produitRepository->createQueryBuilder('p')
+                ->andWhere('p.prix_pro >= :min')
+                ->setParameter('min', $min)
+                ->getQuery();
+            $produits = $query->getResult();
+        } elseif ($max === null && $min === null && $id_cat !== null) {
+            $query = $produitRepository->createQueryBuilder('p')
+                ->andWhere('p.cat = :id_cat')
+                ->setParameter('id_cat', $id_cat)
+                ->getQuery();
+            $produits = $query->getResult();
+        } elseif ($max !== null && $min !== null && $id_cat === null) {
+            $query = $produitRepository->createQueryBuilder('p')
+                ->andWhere('p.prix_pro BETWEEN :min AND :max')
+                ->setParameter('min', $min)
+                ->setParameter('max', $max)
+                ->getQuery();
+            $produits = $query->getResult();
+        } elseif ($max !== null && $min === null && $id_cat !== null) {
+            $query = $produitRepository->createQueryBuilder('p')
+                ->andWhere('p.cat = :id_cat')
+                ->andWhere('p.prix_pro <= :max')
+                ->setParameter('id_cat', $id_cat)
+                ->setParameter('max', $max)
+                ->getQuery();
+            $produits = $query->getResult();
+        }elseif ($max !== null && $min !== null && $id_cat !== null){
+            $query = $produitRepository->createQueryBuilder('p')
+                ->andWhere('p.cat = :id_cat')
+                ->andWhere('p.prix_pro >= :min')
+                ->andWhere('p.prix_pro <= :max')
+                ->setParameter('id_cat', $id_cat)
+                ->setParameter('min', $min)
+                ->setParameter('max', $max)
+                ->getQuery();
+            $produits = $query->getResult();
+        } else{
+            dd("trombé");
+        }
+
+
+
+
+        $data = [];
+        foreach ($produits as $produit) {
+            $data[] = [
+                'id_prod' => $produit->getId(),
+                'nom_produit' => $produit->getNomPro(),
+                'prix_produit' => $produit->getPrixPro(),
+                'description' => substr($produit->getDescriptionPro(), 0, 60),
+                'image_produit' => $produit->getImgPro(),
+            ];
+        }
+
+        return new JsonResponse($data, 200);
+    }
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+    #[Route('/api/autocomplete/{term}', name: 'autocomplete')]
+    public function autocomplete($term,Request $request,EntityManagerInterface $entityManager): JsonResponse
+    {
+
+        $query = $this->entityManager->createQuery(
+            'SELECT p.id, p.nom_pro AS nom_produit
+            FROM App\Entity\Produit p
+            WHERE p.nom_pro LIKE :term'
+        )->setParameter('term', $term . '%');
+
+        // Exécutez la requête et récupérez les résultats
+        $results = $query->getResult();
+
+        // Formatez les résultats pour qu'ils soient utilisables par l'autocomplétion
+        $formattedResults = [];
+
+        foreach ($results as $result) {
+            $formattedResults[] = [
+                'id' => $result['id'],
+                'nom_produit' => $result['nom_produit'],
+            ];
+        }
+
+        return new JsonResponse($formattedResults);
+    }
 }

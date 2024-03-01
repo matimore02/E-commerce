@@ -82,4 +82,6 @@ class StripeController extends AbstractController
         );
         return $this->redirectToRoute('app_stripe', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }
